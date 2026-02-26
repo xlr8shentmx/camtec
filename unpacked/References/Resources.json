@@ -1,0 +1,28 @@
+{
+  "Resources": [
+    {
+      "Name": "camtec-spinner",
+      "Schema": "i",
+      "IsSampleData": false,
+      "IsWritable": false,
+      "Type": "ResourceInfo",
+      "FileName": "9987871d-0eee-4096-8029-fd103aed41a8.gif",
+      "Path": "Assets\\Images\\9987871d-0eee-4096-8029-fd103aed41a8.gif",
+      "Content": "Image",
+      "ResourceKind": "LocalFile",
+      "RootPath": "https://dsprdil101wus.blob.core.windows.net/51913078-0bb6-49e8-a4c2-9f9078b2a590-1/resource/OTk4Nzg3MWQtMGVlZS00MDk2LTgwMjktZmQxMDNhZWQ0MWE4.gif?skoid=58690ece-ec83-4ce2-9ce8-883d4d6a54ee&sktid=975f013f-7f24-47e8-a7d3-abc4752bf346&skt=2026-02-20T15%3A02%3A27Z&ske=2026-02-21T15%3A17%3A27Z&sks=b&skv=2023-01-03&sv=2023-01-03&spr=https&se=2026-02-21T15%3A17%3A27Z&sr=b&sp=r&sig=NSG%2Bvl1GLb%2FcHsdJrtdHja0kZtIDjfrZA28HJ54RyY4%3D"
+    },
+    {
+      "Name": "SampleImage",
+      "Schema": "i",
+      "IsSampleData": true,
+      "IsWritable": false,
+      "Type": "ResourceInfo",
+      "FileName": "/ctrllib/image/images/SampleImage.svg",
+      "Path": "/ctrllib/image/images/SampleImage.svg",
+      "Content": "Image",
+      "ResourceKind": "Uri",
+      "RootPath": "ms-appx:///ctrllib/image/images/SampleImage.svg"
+    }
+  ]
+}

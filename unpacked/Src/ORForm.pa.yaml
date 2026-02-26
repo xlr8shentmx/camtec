@@ -1,0 +1,888 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  ORForm:
+    Properties:
+      Fill: =RGBA(244, 245, 247, 1)
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - rectTCHdr_1:
+          Control: Rectangle@2.3.0
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(27, 30, 43, 1)
+            Height: =58
+            Width: =Parent.Width
+      - btnJobInfo_1:
+          Control: Classic/Button@2.2.0
+          Group: JobInformation
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =318
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =876
+            X: =28
+            Y: =82
+      - btnOFHome:
+          Control: Classic/Button@2.2.0
+          Group: ORHeader
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 122, 69, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(232, 93, 38, 0.1)
+            OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =6
+            RadiusBottomRight: =6
+            RadiusTopLeft: =6
+            RadiusTopRight: =6
+            Size: =13
+            Text: ="< Home"
+            Width: =90
+            X: =16
+            Y: =12
+      - lblTcFormTitle_1:
+          Control: Label@2.5.1
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            Size: =17
+            Text: ="OR Form"
+            Width: =200
+            X: =130
+            Y: =12
+      - lblTrafficCrewJobFormTitle_1:
+          Control: Label@2.5.1
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(157, 162, 181, 1)
+            Font: =Font.'Open Sans'
+            Height: =24
+            Size: =12
+            Text: ="Daily Officer Report"
+            Width: =200
+            X: =240
+            Y: =19
+      - btnOFDraftStatus:
+          Control: Classic/Button@2.2.0
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(245, 166, 35, 0.2)
+            BorderThickness: =1
+            Color: =RGBA(245, 166, 35, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(245, 166, 35, 0.12)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =26
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =11
+            Text: ="● Draft"
+            Width: =70
+            X: =Parent.Width - 340
+            Y: =16
+      - btnOFDraftSave:
+          Control: Classic/Button@2.2.0
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(51, 55, 80, 1)
+            BorderThickness: =1
+            Color: =RGBA(157, 162, 181, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(36, 40, 56, 1)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =11
+            Text: ="Save Draft"
+            Width: =105
+            X: =Parent.Width - 250
+            Y: =13
+      - btnOFSubmit:
+          Control: Classic/Button@2.2.0
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(51, 55, 80, 1)
+            BorderThickness: =1
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(52, 120, 246, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(209, 79, 30, 1)
+            OnSelect: |-
+              =// Validation
+              Set(varORValidate, true);
+              If(
+                  IsBlank(txtORName.Value) ||
+                  IsBlank(txtORBadge.Value) ||
+                  IsBlank(txtORLocation.Value) ||
+                  IsBlank(drpORTimeInHour.Selected),
+
+                  Notify(
+                      If(varLang = "EN",
+                         "Please fill in all required fields",
+                         "Por favor complete todos los campos requeridos"),
+                      NotificationType.Error
+                  ),
+
+                  // Show spinner
+                  Set(varShowSubmitting, true);
+
+                  // Patch OR Report
+                  Patch('OF Form', Defaults('OF Form'),
+                      {
+                          OfficerName: txtORName.Value,
+                          BadgeNumber: txtORBadge.Value,
+                          Address: txtORLocation.Value,
+                          ArrivalTime: dpORStartDate.SelectedDate +
+                              TimeValue(drpORTimeInHour.Selected.Value & ":" & drpORTimeInMin.Selected.Value & " " & drpORTimeInAMPM.Selected.Value),
+                          DismissalTime: dpOREndDate.SelectedDate +
+                              TimeValue(drpORTimeOutHour.Selected.Value & ":" & drpORTimeOutMin.Selected.Value & " " & drpORTimeOutAMPM.Selected.Value),
+                          OfficerSignature: penORSignature.Image,
+                          Comments: txtORComments.Value,
+                          JobID: If(!IsBlank(varPassJobID),
+                              {
+                                  Id: varPassJobID,
+                                  Value: varPassJobName
+                              }
+                          ),
+                          Status: {Value: "Submitted"}
+                      }
+                  );
+
+                  // Hide spinner, show success
+                  Set(varShowSubmitting, false);
+                  Set(varShowSuccess, true);
+                  Set(varORValidate, false);
+
+                  // Clear pass-through variables
+                  Set(varPassJobID, Blank());
+                  Set(varPassJobName, Blank());
+                  Set(varPassDate, Blank());
+                  Set(varPassEndDate, Blank());
+                  Set(varPassLocation, Blank());
+                  Set(varPassCustomer, Blank());
+                  Set(varPassCrewItems, Blank())
+              )
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Size: =12
+            Text: ="Submit ✓"
+            Width: =105
+            X: =Parent.Width - 130
+            Y: =13
+      - dpORStartDate:
+          Control: DatePicker@0.0.46
+          Group: JobInformation
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            SelectedDate: =If(!IsBlank(varPassDate), Text(varPassDate, "mm/dd/yyyy"), "")
+            Width: '=(btnJobInfo_1.Width) / 4  '
+            X: =50
+            Y: =156
+      - dpOREndDate:
+          Control: DatePicker@0.0.46
+          Group: JobInformation
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Placeholder: ="Select an end date..."
+            SelectedDate: =If(!IsBlank(varPassEndDate), Text(varPassEndDate, "mm/dd/yyyy"), "")
+            Width: =(btnJobInfo_1.Width) / 4
+            X: '=dpORStartDate.X + dpORStartDate.Width + 30  '
+            Y: =156
+      - lblJobInformationHeader_1:
+          Control: Label@2.5.1
+          Group: JobInformation
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "ES", "INFORMACIÓN DE TRABAJO", "JOB INFORMATION")
+            Width: =300
+            X: =50
+            Y: =92
+      - drpORCustomer:
+          Control: DropDown@0.0.45
+          Group: JobInformation
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            DefaultSelectedItems: =If(!IsBlank(varPassCustomer), Filter(Customers, CustomerName = varPassCustomer))
+            FontSize: =14
+            Height: =40
+            Items: =Customers
+            Width: =334
+            X: '=dpOREndDate.X + dpOREndDate.Width + 30  '
+            Y: =156
+          Children:
+            - CustomerName1_1:
+                Control: DropDownDataField@1.5.0
+                Variant: textualColumn
+                IsLocked: true
+                Properties:
+                  FieldDisplayName: ="CustomerName"
+                  FieldName: ="Title"
+                  FieldType: ="s"
+                  Order: =1
+      - txtORLocation:
+          Control: TextInput@0.0.54
+          Group: JobInformation
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(txtORLocation.Value), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            Height: =40
+            Value: =If(!IsBlank(varPassLocation), varPassLocation, "")
+            Width: =btnJobInfo.Width - 44
+            X: =50
+            Y: '=lblLocationLabel_1.Y + 35  '
+      - btnOFTimeLog:
+          Control: Classic/Button@2.2.0
+          Group: TimeLog
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =151
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnJobInfo.Width
+            X: =28
+            Y: =btnJobInfo.Y + btnJobInfo.Height + 16
+      - lblTimeLogHeader_1:
+          Control: Label@2.5.1
+          Group: TimeLog
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: ="TIME LOG"
+            Width: =300
+            X: =50
+            Y: =btnOFTimeLog.Y + 10
+      - drpORTimeInHour:
+          Control: DropDown@0.0.45
+          Group: TimeLog
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpORTimeInHour.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["1","2","3","4","5","6","7","8","9","10","11","12"]
+            Width: =100
+            X: '=50  '
+            Y: '=lblTimeInLabel_3.Y + 35  '
+      - drpORTimeInMin:
+          Control: DropDown@0.0.45
+          Group: TimeLog
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpORTimeInMin.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+            Width: =100
+            X: =drpORTimeInHour.X + 120
+            Y: =drpORTimeInHour.Y
+      - drpORTimeInAMPM:
+          Control: DropDown@0.0.45
+          Group: TimeLog
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpORTimeInAMPM.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["AM","PM"]
+            Width: =100
+            X: =drpORTimeInMin.X + 120
+            Y: =drpORTimeInHour.Y
+      - drpORTimeOutHour:
+          Control: DropDown@0.0.45
+          Group: TimeLog
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpORTimeOutHour.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["1","2","3","4","5","6","7","8","9","10","11","12"]
+            Width: =100
+            X: =drpORTimeInAMPM.X + 160
+            Y: =drpORTimeInHour.Y
+      - drpORTimeOutMin:
+          Control: DropDown@0.0.45
+          Group: TimeLog
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpORTimeOutMin.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+            Width: =100
+            X: =drpORTimeOutHour.X + 120
+            Y: =drpORTimeInHour.Y
+      - drpORTimeOutAMPM:
+          Control: DropDown@0.0.45
+          Group: TimeLog
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpORTimeOutAMPM.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["AM","PM"]
+            Width: =100
+            X: =drpORTimeOutMin.X + 120
+            Y: =drpORTimeInHour.Y
+      - btnOFInfo:
+          Control: Classic/Button@2.2.0
+          Group: Signature
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =421
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnJobInfo.Width
+            X: =28
+            Y: =btnOFTimeLog.Y + btnOFTimeLog.Height + 16
+      - lblProjectManagerAcknowledgmentHeader_1:
+          Control: Label@2.5.1
+          Group: Signature
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "OFFICER SIGNATURE", "FIRMA DEL OFICIAL")
+            Width: =500
+            X: =50
+            Y: =btnOFInfo.Y + 10
+      - cmboORCrew:
+          Control: ComboBox@0.0.51
+          Group: JobInformation
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderRadius: =8
+            DefaultSelectedItems: =If(!IsBlank(varPassJobName), varPassCrewItems)
+            FontSize: =13
+            Height: =56
+            Items: |-
+              =AddColumns(
+                  Filter('Crew Members', Status.Value = "Active"),
+                  Fullname,
+                  FirstName & " " & LastName
+              )
+            SelectMultiple: =true
+            Width: =btnJobInfo.Width - 44
+            X: =50
+            Y: =lblORCrew.Y + 35
+          Children:
+            - Fullname1_1:
+                Control: ComboBoxDataField@1.5.0
+                Variant: textualColumn
+                IsLocked: true
+                Properties:
+                  FieldDisplayName: ="Fullname"
+                  FieldName: ="Fullname"
+                  FieldType: ="s"
+                  Order: =6
+      - btnOfficerInfo:
+          Control: Classic/Button@2.2.0
+          Group: OfficerInfo
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =220
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =421
+            X: =btnJobInfo.X + btnJobInfo.Width + 16
+            Y: =82
+      - btnServices_1:
+          Control: Classic/Button@2.2.0
+          Group: CommentSection
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =686
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =421
+            X: =btnJobInfo.X + btnJobInfo.Width + 16
+            Y: '=btnOfficerInfo.Y + btnOfficerInfo.Height + 16    '
+      - lblTimeLogHeader_2:
+          Control: Label@2.5.1
+          Group: CommentSection
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: ="COMMENTS"
+            Width: =300
+            X: =945
+            Y: =334
+      - penORSignature:
+          Control: PenInput@2.3.0
+          Group: Signature
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderStyle: =BorderStyle.Dashed
+            Height: =350
+            Width: =832
+            X: =50
+            Y: =629
+      - lblProjectManagerAcknowledgmentHeader_2:
+          Control: Label@2.5.1
+          Group: OfficerInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "OFFICER INFORMATION", "FIRMA DEL OFICIAL")
+            Width: =250
+            X: =945
+            Y: =92
+      - txtORName:
+          Control: TextInput@0.0.54
+          Group: OfficerInfo
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(txtORName.Value), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            Height: =40
+            Width: '=(btnOfficerInfo.Width - 44) '
+            X: =945
+            Y: =lblOROfficeName.Y + 34
+      - txtORBadge:
+          Control: TextInput@0.0.54
+          Group: OfficerInfo
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(txtORBadge.Value), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            Height: =40
+            Width: '=(btnOfficerInfo.Width - 44) '
+            X: =945
+            Y: =244
+      - txtORComments:
+          Control: TextInput@0.0.54
+          Group: CommentSection
+          Properties:
+            Height: =620
+            Width: =377
+            X: =945
+            Y: =359
+      - rectSubmitOverlay_1:
+          Control: Rectangle@2.3.0
+          Group: SubmitPopUp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            Visible: =varShowSubmitting Or varShowSuccess
+            Width: =Parent.Width
+      - rectSubmitCard_1:
+          Control: Classic/Button@2.2.0
+          Group: SubmitPopUp
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: '=200 '
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Visible: '=varShowSubmitting   '
+            Width: '=300 '
+            X: =(Parent.Width - 300) / 2
+            Y: =(Parent.Height - 200) / 2
+      - htmlSpinner_1:
+          Control: HtmlViewer@2.1.0
+          Group: SubmitPopUp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =100
+            HtmlText: ="<div style='text-align:center; font-family:Segoe UI, sans-serif;'><div style='font-size:17px; font-weight:700; color:#1a1d27; margin-bottom:4px;'>" & If(varLang = "EN", "Submitting...", "Enviando...") & "</div><div style='font-size:13px; color:#6b7080;'>" & If(varLang = "EN", "Saving officer report", "Guardando reporte de oficial") & "</div></div>"
+            Visible: =varShowSubmitting
+            Width: =300
+            X: =(Parent.Width - 300) / 2
+            Y: =imgSpinner_1.Y + 60
+      - imgSpinner_1:
+          Control: Image@2.2.3
+          Group: SubmitPopUp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =50
+            Image: ='camtec-spinner'
+            Visible: =varShowSubmitting
+            Width: =50
+            X: =rectSubmitCard_1.X + (rectSubmitCard_1.Width - 50) / 2
+            Y: =rectSubmitCard_1.Y + 30
+      - btnSuccessCard_1:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: '=If(varNeedAB, 340, 220)   '
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =varShowSuccess
+            Width: =360
+            X: =(Parent.Width - 360) / 2
+            Y: =(Parent.Height - 260) / 2
+      - htmlSuccess_1:
+          Control: HtmlViewer@2.1.0
+          Group: SuccessPopUp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =160
+            HtmlText: |-
+              ="<div style='display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; font-family:Segoe UI, sans-serif; padding-top:20px;'><div style='width:56px; height:56px; border-radius:50%; background:rgba(52,199,89,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:14px;'><span style='font-size:30px; color:#34c759;'>✓</span></div><div style='font-size:18px; font-weight:700; color:#1a1d27; margin-bottom:4px;'>" & If(varLang = "EN", "OR Report Submitted!", "¡Reporte OR Enviado!") & "</div><div style='font-size:15px; color:#6b7080;'>" & txtORName.Value & " — #" & txtORBadge.Value & "</div></div>"
+            Visible: =varShowSuccess
+            Width: =360
+            X: =btnSuccessCard_1.X
+            Y: =btnSuccessCard_1.Y
+      - lblNextSteps_OR:
+          Control: Label@2.5.1
+          Group: SuccessPopUp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =12
+            Text: =If(varLang = "EN", "NEXT STEPS:", "Próximos Pasos:")
+            Visible: =varShowSuccess && varNeedAB
+            X: =btnSuccessCard_1.X + 20
+            Y: =btnSuccessCard_1.Y + 160
+      - btnGoAB_OR:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(52, 120, 246, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(40, 100, 220, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedAB, false);
+              Set(varPassJobID, varPendingJobID);
+              Set(varPassJobName, varPendingJobName);
+              Set(varPassDate, varPendingDate);
+              Set(varPassCrewDriver, varPendingCrewDriver);
+              Navigate(ABForm, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "Fill AB Inspection →", "Llenar Inspección AB →")
+            Visible: =varShowSuccess && varNeedAB
+            Width: =btnSuccessCard_1.Width - 40
+            X: =btnSuccessCard_1.X + 20
+            Y: =lblNextSteps_OR.Y + 50
+      - btnTCNewForm_1:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(232, 93, 38, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedAB, false);
+              Reset(txtORName);
+              Reset(txtORBadge);
+              Reset(txtORLocation);
+              Reset(txtORComments);
+              Reset(penORSignature);
+              Reset(drpORTimeInHour);
+              Reset(drpORTimeInMin);
+              Reset(drpORTimeInAMPM);
+              Reset(drpORTimeOutHour);
+              Reset(drpORTimeOutMin);
+              Reset(drpORTimeOutAMPM);
+              Reset(cmboORCrew);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "New Form +", "Nuevo Formulario +")
+            Visible: =varShowSuccess
+            Width: =(btnSuccessCard.Width - 52) / 2
+            X: =523
+            Y: =btnSuccessCard.Y + btnSuccessCard.Height - 65
+      - btnTCGoHome_1:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(26, 29, 39, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedAB, false);
+              Navigate(HomeScreen, ScreenTransition.None);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "Go Home", "Ir al Inicio")
+            Visible: =varShowSuccess
+            Width: =(btnSuccessCard.Width - 52) / 2
+            X: =689
+            Y: =btnSuccessCard.Y + btnSuccessCard.Height - 65
+      - lblTCStartDate_1:
+          Control: HtmlViewer@2.1.0
+          Group: JobInformation
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Start Date", "Fecha Inicio") & "</span><span style='color:#ef4444;'> *</span>" & If(!IsBlank(varPassDate), "<span style='font-size:14px; font-weight:600; color:#3478f6; background:rgba(52,120,246,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =dpORStartDate.X
+            Y: =122
+      - lblTCStartDate_2:
+          Control: HtmlViewer@2.1.0
+          Group: JobInformation
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "End Date", "Fecha Fin") & "</span><span style='color:#ef4444;'> *</span>" & If(!IsBlank(varPassEndDate), "<span style='font-size:14px; font-weight:600; color:#3478f6; background:rgba(52,120,246,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =dpOREndDate.X
+            Y: =lblTCStartDate_1.Y
+      - lblCustomerLabel_1:
+          Control: HtmlViewer@2.1.0
+          Group: JobInformation
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Customer", "Cliente") & "</span><span style='color:#ef4444;'> *</span>" & If(!IsBlank(varPassCustomer), "<span style='font-size:14px; font-weight:600; color:#3478f6; background:rgba(52,120,246,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =drpORCustomer.X
+            Y: =lblTCStartDate_1.Y
+      - lblLocationLabel_1:
+          Control: HtmlViewer@2.1.0
+          Group: JobInformation
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Address", "Dirección") & "</span><span style='color:#ef4444;'> *</span>" & If(!IsBlank(varPassLocation), "<span style='font-size:14px; font-weight:600; color:#3478f6; background:rgba(52,120,246,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =txtORLocation.X
+            Y: =dpORStartDate.Y + 50
+      - lblORCrew:
+          Control: HtmlViewer@2.1.0
+          Group: JobInformation
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Crew Members", "Miembros del Equipo") & "</span>" & If(!IsBlank(varPassCrewItems), "<span style='font-size:14px; font-weight:600; color:#3478f6; background:rgba(52,120,246,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =txtORLocation.X
+            Y: =txtORLocation.Y + 50
+      - lblTimeInLabel_3:
+          Control: HtmlViewer@2.1.0
+          Group: TimeLog
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: "=\"<span style='font-size:15px; font-weight:600; color:#6b7080;'>\" & If(varLang = \"ES\", \"Hora de Entrada\", \"Time of Arrival\") & \"</span><span style='color:#ef4444;'> *</span>\" "
+            Width: =300
+            X: =txtORLocation.X
+            Y: =lblTimeLogHeader.Y + 30
+      - lblTimeOutLabel_1:
+          Control: HtmlViewer@2.1.0
+          Group: TimeLog
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: "=\"<span style='font-size:15px; font-weight:600; color:#6b7080;'>\" & If(varLang = \"ES\", \"Hora de Salida\", \"Time of Dismissal\") & \"</span><span style='color:#ef4444;'> *</span>\" "
+            Width: =300
+            X: =drpORTimeInAMPM.X + 160
+            Y: =lblTimeLogHeader.Y + 30
+      - lblOROfficeName:
+          Control: HtmlViewer@2.1.0
+          Group: OfficerInfo
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: "=\"<span style='font-size:15px; font-weight:600; color:#6b7080;'>\" & If(varLang = \"ES\", \"Hora de Entrada\", \"Officer Name\") & \"</span><span style='color:#ef4444;'> *</span>\" "
+            Width: =300
+            X: =txtORName.X
+            Y: =lblProjectManagerAcknowledgmentHeader_2.Y + 30
+      - lblOROfficeName_1:
+          Control: HtmlViewer@2.1.0
+          Group: OfficerInfo
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: "=\"<span style='font-size:15px; font-weight:600; color:#6b7080;'>\" & If(varLang = \"ES\", \"Hora de Entrada\", \"Badge Number\") & \"</span><span style='color:#ef4444;'> *</span>\" "
+            Width: =300
+            X: =txtORName.X
+            Y: =dpORStartDate.Y + 50
+      - Rectangle4_1:
+          Control: Rectangle@2.3.0
+          Group: ORHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(51, 55, 80, 1)
+            Height: =24
+            Width: =1
+            X: =114
+            Y: =17

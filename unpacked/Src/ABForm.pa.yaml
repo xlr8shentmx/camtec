@@ -1,0 +1,1316 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  ABForm:
+    Properties:
+      Fill: =RGBA(244, 245, 247, 1)
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - rectTCHdr_2:
+          Control: Rectangle@2.3.0
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(27, 30, 43, 1)
+            Height: =58
+            Width: =Parent.Width
+      - btnOFHome_1:
+          Control: Classic/Button@2.2.0
+          Group: ABHeader
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 122, 69, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(232, 93, 38, 0.1)
+            OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =6
+            RadiusBottomRight: =6
+            RadiusTopLeft: =6
+            RadiusTopRight: =6
+            Size: =13
+            Text: ="< Home"
+            Width: =90
+            X: =16
+            Y: =12
+      - lblABInspectionTitle:
+          Control: Label@2.5.1
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            Size: =17
+            Text: ="AB Inspection"
+            Width: =200
+            X: =130
+            Y: =12
+      - lblArrowBoardInspectionTitle:
+          Control: Label@2.5.1
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(157, 162, 181, 1)
+            Font: =Font.'Open Sans'
+            Height: =24
+            Size: =12
+            Text: ="Arrow Board Inspection Form"
+            Width: =400
+            X: =302
+            Y: =18
+      - btnOFDraftStatus_1:
+          Control: Classic/Button@2.2.0
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(245, 166, 35, 0.2)
+            BorderThickness: =1
+            Color: =RGBA(245, 166, 35, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(245, 166, 35, 0.12)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =26
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =11
+            Text: ="● Draft"
+            Width: =70
+            X: =Parent.Width - 340
+            Y: =16
+      - btnOFDraftSave_1:
+          Control: Classic/Button@2.2.0
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(51, 55, 80, 1)
+            BorderThickness: =1
+            Color: =RGBA(157, 162, 181, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(36, 40, 56, 1)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =11
+            Text: ="Save Draft"
+            Width: =105
+            X: =Parent.Width - 250
+            Y: =13
+      - btnOFSubmit_1:
+          Control: Classic/Button@2.2.0
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(51, 55, 80, 1)
+            BorderThickness: =1
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(123, 94, 167, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(209, 79, 30, 1)
+            OnSelect: |-
+              =Set(varABValidate, true);
+
+              If(
+                  IsBlank(txtABNumber.Value) ||
+                  IsBlank(cmboABDriver.Selected) ||
+                  IsBlank(drpABPickupHour.Selected),
+
+                  Notify(
+                      If(varLang = "EN",
+                         "Please fill in all required fields",
+                         "Por favor complete todos los campos requeridos"),
+                      NotificationType.Error
+                  ),
+
+                  // Show spinner
+                  Set(varShowSubmitting, true);
+
+                  // Patch Arrow Board Inspection
+                  Patch('Arrowboard', Defaults('Arrowboard'),
+                      {
+                          ArrowBoardNumber: txtABNumber.Value,
+                          JobID: If(!IsBlank(varPassJobID),
+                              {
+                                  Id: varPassJobID,
+                                  Value: varPassJobName
+                              }
+                          ),
+                          CrewDriver: {
+                              Id: cmboABDriver.Selected.ID,
+                              Value: cmboABDriver.Selected.LastName
+                          },
+                          PickupTime: If(!IsBlank(varPassDate), varPassDate, dpABDate.SelectedDate) +
+                              TimeValue(drpABPickupHour.Selected.Value & ":" & drpABPickupMin.Selected.Value & " " & drpABPickupAMPM.Selected.Value),
+                          DropOffTime: If(!IsBlank(varPassDate), varPassDate, dpABDate.SelectedDate) +
+                              TimeValue(drpABDropoffHour.Selected.Value & ":" & drpABDropoffMin.Selected.Value & " " & drpABDropoffAMPM.Selected.Value),
+
+                          // Pick Up checkboxes
+                          Tires_Pickup: chkPU_Tires.Checked,
+                          Pins_Pickup: chkPU_Pins.Checked,
+                          StabilizingLegs_Pickup: chkPU_StabLegs.Checked,
+                          TurnSignals_Pickup: chkPU_TurnSignals.Checked,
+                          ArrowScreen_Pickup: chkPU_ArrowScreen.Checked,
+                          PulleySystem_Pickup: chkPU_Pulley.Checked,
+                          ControlBox_Pickup: chkPU_ControlBox.Checked,
+                          Chains_Pickup: chkPU_Chains.Checked,
+                          ElectricCable_Pickup: chkPU_ElecCable.Checked,
+                          SupportLeg_Pickup: chkPU_SupportLeg.Checked,
+
+                          // Drop Off checkboxes
+                          Tires_Dropoff: chkDO_Tires.Checked,
+                          Pins_Dropoff: chkDO_Pins.Checked,
+                          Stabilizing_Dropoff: chkDO_StabLegs.Checked,
+                          TurnSignals_Dropoff: chkDO_TurnSignals.Checked,
+                          ArrowScreen_Dropoff: chkDO_ArrowScreen.Checked,
+                          PulleySystem_Dropoff: chkDO_Pulley.Checked,
+                          ControlBox_Dropoff: chkDO_ControlBox.Checked,
+                          Chains_Dropoff: chkDO_Chains.Checked,
+                          ElectricCable_Dropoff: chkDO_ElecCable.Checked,
+                          SupportLeg_Dropoff: chkDO_SupportLeg.Checked,
+
+                          Notes: txtABNotes.Value,
+                          Status: {Value: "Submitted"}
+                      }
+                  );
+
+                  // Hide spinner, show success
+                  Set(varShowSubmitting, false);
+                  Set(varShowSuccess, true);
+                  Set(varABValidate, false);
+
+                  // Clear pass-through variables
+                  Set(varPassJobID, Blank());
+                  Set(varPassJobName, Blank());
+                  Set(varPassDate, Blank());
+                  Set(varPassCrewDriver, Blank())
+              )
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Size: =12
+            Text: ="Submit ✓"
+            Width: =105
+            X: =1240
+            Y: =13
+      - Rectangle4_2:
+          Control: Rectangle@2.3.0
+          Group: ABHeader
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(51, 55, 80, 1)
+            Height: =24
+            Width: =1
+            X: =114
+            Y: =17
+      - btnABInfo:
+          Control: Classic/Button@2.2.0
+          Group: ABInfo
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =236
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =498
+            X: =28
+            Y: =82
+      - btnABTimeLog:
+          Control: Classic/Button@2.2.0
+          Group: ABDropOff
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =140
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnABInfo.Width
+            X: =28
+            Y: =btnABTimeLog_1.Y + btnABTimeLog_1.Height + 16
+      - btnABComments:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =347
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnABInfo.Width
+            X: =28
+            Y: =btnABTimeLog.Y + btnABTimeLog.Height + 16
+      - btnABTimeLog_1:
+          Control: Classic/Button@2.2.0
+          Group: ABPickUp
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =140
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnABInfo.Width
+            X: =btnABInfo.X
+            Y: =btnABInfo.Y + btnABInfo.Height + 16
+      - btnABComments_1:
+          Control: Classic/Button@2.2.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =911
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =1366 - (btnABInfo.Width + 28 + 16 + 28)
+            X: =btnABInfo.X + btnABInfo.Width + 16
+            Y: =btnABInfo.Y
+      - lblBoardInformation:
+          Control: Label@2.5.1
+          Group: ABInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "BOARD INFORMATION", "INFORMACIÓN DEL TABLERO")
+            Width: =300
+            X: =50
+            Y: =92
+      - lblPickUpLabel:
+          Control: Label@2.5.1
+          Group: ABPickUp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "PICK UP / SALIDA", "SALIDA / PICK UP")
+            Width: =300
+            X: =50
+            Y: =btnABTimeLog_1.Y + 10
+      - lblDropOffInformation:
+          Control: Label@2.5.1
+          Group: ABDropOff
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "DROP OFF / ENTRADA", "ENTRADA / DROP OFF")
+            Width: =300
+            X: =50
+            Y: =btnABTimeLog.Y + 10
+      - lblJobInformation:
+          Control: Label@2.5.1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "NOTES", "NOTAS")
+            Width: =300
+            X: =50
+            Y: =btnABComments.Y + 10
+      - CheckboxBGBlue:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(52, 120, 246, 0.03)
+            Font: =Font.'Open Sans'
+            Height: =675
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =120
+            X: =1001
+            Y: =121
+      - ChecbkboxBGRed:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(232, 93, 38, 0.03)
+            Font: =Font.'Open Sans'
+            Height: =675
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =120
+            X: =1151
+            Y: =122
+      - lblABInspection:
+          Control: Label@2.5.1
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "INSPECTION CHECKLIST", "LISTA DE INSPECCIÓN")
+            Width: =300
+            X: =btnABComments_1.X + 22
+            Y: '=btnABComments_1.Y + 10  '
+      - txtABNumber:
+          Control: TextInput@0.0.54
+          Group: ABInfo
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varABValidate && IsBlank(txtABNumber.Value), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            Height: =40
+            Width: =220
+            X: =50
+            Y: =156
+      - lblABNumber:
+          Control: HtmlViewer@2.1.0
+          Group: ABInfo
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: |-
+              ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Arrow Board #", "Tablero de Flechas #") & "</span><span style='color:#ef4444;'> *</span>"
+            Width: =300
+            X: =50
+            Y: =122
+      - dpABDate:
+          Control: DatePicker@0.0.46
+          Group: ABInfo
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varABValidate && IsBlank(dpABDate.SelectedDate), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Placeholder: ="Select an end date..."
+            SelectedDate: =If(!IsBlank(varPassEndDate), Text(varPassEndDate, "mm/dd/yyyy"), "")
+            Width: =220
+            X: =txtABNumber.X + txtABNumber.Width + 16
+            Y: =txtABNumber.Y
+      - lblTCStartDate_3:
+          Control: HtmlViewer@2.1.0
+          Group: ABInfo
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Date", "Fecha") & "</span><span style='color:#ef4444;'> *</span>" & If(!IsBlank(varPassDate), "<span style='font-size:14px; font-weight:600; color:#7b5ea7; background:rgba(123,94,167,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =dpABDate.X
+            Y: =121
+      - drpABPickupHour:
+          Control: DropDown@0.0.45
+          Group: ABPickUp
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varABValidate && IsBlank(drpABPickupHour.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["1","2","3","4","5","6","7","8","9","10","11","12"]
+            Width: =100
+            X: =50
+            Y: '=lblTimeInLabel_4.Y + 35  '
+      - drpABPickupMin:
+          Control: DropDown@0.0.45
+          Group: ABPickUp
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpABPickupMin.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+            Width: =100
+            X: =drpABPickupHour.X + 120
+            Y: =drpABPickupHour.Y
+      - drpABPickupAMPM:
+          Control: DropDown@0.0.45
+          Group: ABPickUp
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpABPickupAMPM.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["AM","PM"]
+            Width: =100
+            X: =drpABPickupMin.X + 120
+            Y: =drpABPickupHour.Y
+      - lblTimeInLabel_4:
+          Control: HtmlViewer@2.1.0
+          Group: ABPickUp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Pick Up Time", "Hora de Salida") & "</span><span style='color:#ef4444;'> *</span>"
+            Width: =300
+            X: =txtORLocation.X
+            Y: =lblPickUpLabel.Y + 30
+      - cmboABDriver:
+          Control: ComboBox@0.0.51
+          Group: ABInfo
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varABValidate && IsBlank(cmboABDriver.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderRadius: =8
+            DefaultSelectedItems: =If(!IsBlank(varPassJobName), varPassCrewItems)
+            FontSize: =14
+            Height: =56
+            Items: |-
+              =AddColumns(
+                  Filter('Crew Members', Status.Value = "Active"),
+                  Fullname,
+                  FirstName & " " & LastName
+              )
+            SelectMultiple: =true
+            Width: =btnABInfo.Width - 44
+            X: =txtABNumber.X
+            Y: =lblORCrew_1.Y + 35
+          Children:
+            - Fullname1_2:
+                Control: ComboBoxDataField@1.5.0
+                Variant: textualColumn
+                IsLocked: true
+                Properties:
+                  FieldDisplayName: ="Fullname"
+                  FieldName: ="Fullname"
+                  FieldType: ="s"
+                  Order: =6
+      - lblORCrew_1:
+          Control: HtmlViewer@2.1.0
+          Group: ABInfo
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Crew Members", "Miembros del Equipo") & "</span>" & If(!IsBlank(varPassCrewItems), "<span style='font-size:14px; font-weight:600; color:#7b5ea7; background:rgba(123,94,167,0.06); padding:2px 8px; border-radius:4px; margin-left:8px;'>" & If(varLang = "EN", "Pre-filled", "Pre-llenado") & "</span>", "")
+            Width: =210
+            X: =txtORLocation.X
+            Y: =txtABNumber.Y + 50
+      - drpABDropoffHour:
+          Control: DropDown@0.0.45
+          Group: ABDropOff
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpABDropoffHour.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["1","2","3","4","5","6","7","8","9","10","11","12"]
+            Width: =100
+            X: =50
+            Y: '=lblTimeInLabel_5.Y + 35  '
+      - drpABDropoffMin:
+          Control: DropDown@0.0.45
+          Group: ABDropOff
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpABDropoffMin.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"]
+            Width: =100
+            X: =drpABDropoffHour.X + 120
+            Y: =drpABDropoffHour.Y
+      - drpABDropoffAMPM:
+          Control: DropDown@0.0.45
+          Group: ABDropOff
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varORValidate && IsBlank(drpABDropoffAMPM.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =["AM","PM"]
+            Width: =100
+            X: =drpABDropoffMin.X + 120
+            Y: =drpABDropoffHour.Y
+      - lblTimeInLabel_5:
+          Control: HtmlViewer@2.1.0
+          Group: ABDropOff
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: ="<span style='font-size:15px; font-weight:600; color:#6b7080;'>" & If(varLang = "EN", "Drop Off Time", "Hora de Entrada") & "</span>"
+            Width: =300
+            X: =txtORLocation.X
+            Y: =lblDropOffInformation.Y + 30
+      - txtABNotes:
+          Control: TextInput@0.0.54
+          Properties:
+            FontSize: =14
+            Height: =271
+            Mode: ='TextInputCanvas.Mode'.Multiline
+            Width: =454
+            X: =50
+            Y: =695
+      - lblABColItem:
+          Control: Label@2.5.1
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =30
+            Size: =11
+            Text: =If(varLang = "EN", "ITEM", "ELEMENTO")
+            Width: =400
+            X: '=btnABComments_1.X + 40 '
+            Y: =133
+      - lblABColPickup:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =30
+            HtmlText: ="<div style='text-align:center; font-family:Segoe UI, sans-serif;'><div style='font-size:14px; font-weight:700; color:#6b7080; text-transform:uppercase;'>" & If(varLang = "EN", "Pick Up", "Salida") & "</div></div>"
+            Width: =140
+            X: =lblABColItem.X + lblABColItem.Width + 10
+            Y: =133
+      - lblABColDropOff:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =30
+            HtmlText: ="<div style='text-align:center; font-family:Segoe UI, sans-serif;'><div style='font-size:14px; font-weight:700; color:#6b7080; text-transform:uppercase;'>" & If(varLang = "EN", "Drop Off", "Entrada") & "</div></div>"
+            Width: =140
+            X: =lblABColPickup.X + lblABColPickup.Width + 10
+            Y: =lblABColPickup.Y
+      - rectABHeaderDiv:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =2
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =lblABColItem.Y + 40
+      - htmlAB01:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Tires", "Llantas") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv.Y + 10
+      - chkPU_Tires:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB01.Y
+      - chkDO_Tires:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB01.Y
+      - rectABHeaderDiv_1:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB01.Y + 50
+      - chkPU_Pins:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02.Y
+      - chkDO_Pins:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02.Y
+      - htmlAB02:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Pins", "Seguros") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_1.Y + 12
+      - rectABHeaderDiv_2:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02.Y + 50
+      - chkPU_StabLegs:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_1.Y
+      - chkDO_StabLegs:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_1.Y
+      - htmlAB02_1:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "4 Stabilizing Legs", "4 Patas Estabilizadoras") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_2.Y + 12
+      - rectABHeaderDiv_3:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_1.Y + 50
+      - chkPU_TurnSignals:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_2.Y
+      - chkDO_TurnSignals:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_2.Y
+      - htmlAB02_2:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Turn Signals", "Luces Direccionales") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_3.Y + 12
+      - rectABHeaderDiv_4:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_2.Y + 50
+      - chkPU_ArrowScreen:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_3.Y
+      - chkDO_ArrowScreen:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_3.Y
+      - htmlAB02_3:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Arrow Screen", "Luces en la Flecha") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_4.Y + 12
+      - rectABHeaderDiv_5:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_3.Y + 50
+      - chkPU_Pulley:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_4.Y
+      - chkDO_Pulley:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_4.Y
+      - htmlAB02_4:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Pulley System", "Sistema de Polea") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_5.Y + 12
+      - rectABHeaderDiv_6:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_4.Y + 50
+      - chkPU_ControlBox:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_5.Y
+      - chkDO_ControlBox:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_5.Y
+      - htmlAB02_5:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Control Box", "Caja de Control") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_6.Y + 12
+      - rectABHeaderDiv_7:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_5.Y + 50
+      - chkPU_Chains:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_6.Y
+      - chkDO_Chains:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_6.Y
+      - htmlAB02_6:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Chains", "Cadenas") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_7.Y + 12
+      - rectABHeaderDiv_8:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_6.Y + 50
+      - chkPU_ElecCable:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_7.Y
+      - chkDO_ElecCable:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_7.Y
+      - htmlAB02_7:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Electric Cable", "Cable Eléctrico") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_8.Y + 12
+      - rectABHeaderDiv_9:
+          Control: Rectangle@2.3.0
+          Group: InspectionChecklist
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: '=RGBA(226, 228, 233, 1)  '
+            Height: =1
+            Width: =btnABComments_1.Width - 44
+            X: '=btnABComments_1.X + 22   '
+            Y: =htmlAB02_7.Y + 50
+      - chkPU_SupportLeg:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColPickup.X + 45
+            Y: =htmlAB02_8.Y
+      - chkDO_SupportLeg:
+          Control: CheckBox@0.0.30
+          Group: InspectionChecklist
+          Properties:
+            BasePaletteColor: =RGBA(123, 94, 167, 1)
+            CheckboxSize: =28
+            Height: =40
+            Label: =
+            Width: =48
+            X: =lblABColDropOff.X + 45
+            Y: =htmlAB02_8.Y
+      - htmlAB02_8:
+          Control: HtmlViewer@2.1.0
+          Group: InspectionChecklist
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='font-family:Segoe UI, sans-serif;'><div style='font-size:20px; font-weight:600; color:#1a1d27;'>" & If(varLang = "EN", "Support Leg", "Pata de Soporte Central") & "</div>"
+            Width: =lblABColItem.Width
+            X: =btnABComments_1.X + 48
+            Y: =rectABHeaderDiv_9.Y + 12
+      - rectSubmitOverlay_2:
+          Control: Rectangle@2.3.0
+          Group: SubmitPopUp_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            Visible: =varShowSubmitting Or varShowSuccess
+            Width: =Parent.Width
+      - rectSubmitCard_2:
+          Control: Classic/Button@2.2.0
+          Group: SubmitPopUp_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: '=200 '
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Visible: '=varShowSubmitting   '
+            Width: '=300 '
+            X: =(Parent.Width - 300) / 2
+            Y: =(Parent.Height - 200) / 2
+      - htmlSpinner_2:
+          Control: HtmlViewer@2.1.0
+          Group: SubmitPopUp_1
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =100
+            HtmlText: ="<div style='text-align:center; font-family:Segoe UI, sans-serif;'><div style='font-size:17px; font-weight:700; color:#1a1d27; margin-bottom:4px;'>" & If(varLang = "EN", "Submitting...", "Enviando...") & "</div><div style='font-size:13px; color:#6b7080;'>" & If(varLang = "EN", "Saving Inspection Report", "Guardando reporte de inspección") & "</div></div>"
+            Visible: =varShowSubmitting
+            Width: =300
+            X: =(Parent.Width - 300) / 2
+            Y: =imgSpinner_2.Y + 60
+      - imgSpinner_2:
+          Control: Image@2.2.3
+          Group: SubmitPopUp_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =50
+            Image: ='camtec-spinner'
+            Visible: =varShowSubmitting
+            Width: =50
+            X: =rectSubmitCard_2.X + (rectSubmitCard_2.Width - 50) / 2
+            Y: =rectSubmitCard_2.Y + 30
+      - btnSuccessCard_2:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: '=If(varNeedOR, 340, 220)   '
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =varShowSuccess
+            Width: =360
+            X: =(Parent.Width - 360) / 2
+            Y: =(Parent.Height - 260) / 2
+      - htmlSuccess_2:
+          Control: HtmlViewer@2.1.0
+          Group: SuccessPopUp_1
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =160
+            HtmlText: |-
+              ="<div style='display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; font-family:Segoe UI, sans-serif; padding-top:20px;'><div style='width:56px; height:56px; border-radius:50%; background:rgba(52,199,89,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:14px;'><span style='font-size:30px; color:#34c759;'>✓</span></div><div style='font-size:18px; font-weight:700; color:#1a1d27; margin-bottom:4px;'>" & If(varLang = "EN", "Inspection Submitted!", "¡Inspección Enviada!") & "</div><div style='font-size:15px; color:#6b7080;'>AB #" & txtABNumber.Value & " — " & dpABDate.SelectedDate & "</div></div>"
+            Visible: =varShowSuccess
+            Width: =360
+            X: =btnSuccessCard_2.X
+            Y: =btnSuccessCard_2.Y
+      - lblNextSteps_AB:
+          Control: Label@2.5.1
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =12
+            Text: =If(varLang = "EN", "NEXT STEPS:", "Próximos Pasos:")
+            Visible: =varShowSuccess && varNeedOR
+            X: =btnSuccessCard_2.X + 20
+            Y: =btnSuccessCard_2.Y + 160
+      - btnGoOR_AB:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(123, 94, 167, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedOR, false);
+              Set(varPassJobID, varPendingJobID);
+              Set(varPassJobName, varPendingJobName);
+              Set(varPassDate, varPendingDate);
+              Set(varPassEndDate, varPendingEndDate);
+              Set(varPassLocation, varPendingLocation);
+              Set(varPassCustomer, varPendingCustomer);
+              Set(varPassCrewItems, varPendingCrewItems);
+              Navigate(ORForm, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "Fill OR Report →", "Llenar Reporte OR →")
+            Visible: =varShowSuccess && varNeedOR
+            Width: =btnSuccessCard_2.Width - 40
+            X: =btnSuccessCard_2.X + 20
+            Y: =lblNextSteps_AB.Y + 50
+      - btnTCNewForm_2:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(232, 93, 38, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedOR, false);
+              Reset(txtABNumber);
+              Reset(cmboABDriver);
+              Reset(drpABPickupHour);
+              Reset(drpABPickupMin);
+              Reset(drpABPickupAMPM);
+              Reset(drpABDropoffHour);
+              Reset(drpABDropoffMin);
+              Reset(drpABDropoffAMPM);
+              Reset(txtABNotes);
+              Reset(chkPU_Tires);
+              Reset(chkPU_Pins);
+              Reset(chkPU_StabLegs);
+              Reset(chkPU_TurnSignals);
+              Reset(chkPU_ArrowScreen);
+              Reset(chkPU_Pulley);
+              Reset(chkPU_ControlBox);
+              Reset(chkPU_Chains);
+              Reset(chkPU_ElecCable);
+              Reset(chkPU_SupportLeg);
+              Reset(chkDO_Tires);
+              Reset(chkDO_Pins);
+              Reset(chkDO_StabLegs);
+              Reset(chkDO_TurnSignals);
+              Reset(chkDO_ArrowScreen);
+              Reset(chkDO_Pulley);
+              Reset(chkDO_ControlBox);
+              Reset(chkDO_Chains);
+              Reset(chkDO_ElecCable);
+              Reset(chkDO_SupportLeg)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "New Form +", "Nuevo Formulario +")
+            Visible: =varShowSuccess
+            Width: =(btnSuccessCard.Width - 52) / 2
+            X: =523
+            Y: =btnSuccessCard.Y + btnSuccessCard.Height - 65
+      - btnTCGoHome_2:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(26, 29, 39, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedOR, false);
+              Navigate(HomeScreen, ScreenTransition.None);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "Go Home", "Ir al Inicio")
+            Visible: =varShowSuccess
+            Width: =(btnSuccessCard.Width - 52) / 2
+            X: =689
+            Y: =btnSuccessCard.Y + btnSuccessCard.Height - 65
