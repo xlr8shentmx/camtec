@@ -1,0 +1,297 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+#
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+#
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  JobDetailScreen:
+    Properties:
+      Fill: =RGBA(244, 245, 247, 1)
+    Children:
+      - rectDetailHeader:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(26, 29, 39, 1)
+            Height: =70
+            Width: =Parent.Width
+      - btnBackDetail:
+          Control: Button@2.2.0
+          Properties:
+            Align: =Align.Left
+            BorderThickness: =0
+            Color: =RGBA(52, 120, 246, 1)
+            Fill: =RGBA(0, 0, 0, 0)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =40
+            HoverColor: =RGBA(40, 100, 220, 1)
+            HoverFill: =RGBA(240, 242, 245, 1)
+            OnSelect: =Back(ScreenTransition.None)
+            PressedColor: =RGBA(52, 120, 246, 1)
+            PressedFill: =RGBA(230, 232, 236, 1)
+            Size: =13
+            Text: =If(varLang = "EN", "← Back", "← Volver")
+            Width: =100
+            X: =20
+            Y: =15
+      - lblDetailTitle:
+          Control: Label@2.5.1
+          Properties:
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =40
+            Size: =20
+            Text: =varSelectedJob.Title
+            VerticalAlign: =VerticalAlign.Middle
+            Width: =500
+            X: =130
+            Y: =15
+      - rectDetailCard:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderColor: =RGBA(220, 222, 228, 1)
+            BorderThickness: =1
+            Fill: =Color.White
+            Height: =Parent.Height - 110
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Width: =Parent.Width - 80
+            X: =40
+            Y: =90
+      # Left column fields
+      - lblDetailName0:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Job Name"
+            Width: =200
+            X: =70
+            Y: =115
+      - lblDetailVal0:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =varSelectedJob.Title
+            Width: =400
+            X: =70
+            Y: =135
+      - lblDetailName1:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Job Number"
+            Width: =200
+            X: =70
+            Y: =170
+      - lblDetailVal1:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =varSelectedJob.JobNumber
+            Width: =400
+            X: =70
+            Y: =190
+      - lblDetailName2:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Customer"
+            Width: =200
+            X: =70
+            Y: =225
+      - lblDetailVal2:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =If(!IsBlank(varSelectedJob.CustomerID_x003a_CustomerName), varSelectedJob.CustomerID_x003a_CustomerName.Value, "")
+            Width: =400
+            X: =70
+            Y: =245
+      - lblDetailName3:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Location"
+            Width: =200
+            X: =70
+            Y: =280
+      - lblDetailVal3:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =varSelectedJob.Location
+            Width: =400
+            X: =70
+            Y: =300
+      - lblDetailName4:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Start Date"
+            Width: =200
+            X: =70
+            Y: =335
+      - lblDetailVal4:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =Text(varSelectedJob.Start_x0020_Date, "mmmm d, yyyy")
+            Width: =400
+            X: =70
+            Y: =355
+      - lblDetailName5:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="End Date"
+            Width: =200
+            X: =70
+            Y: =390
+      - lblDetailVal5:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =Text(varSelectedJob.EndDate0, "mmmm d, yyyy")
+            Width: =400
+            X: =70
+            Y: =410
+      # Right column fields
+      - lblDetailName6:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Project Manager"
+            Width: =200
+            X: =700
+            Y: =115
+      - lblDetailVal6:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =varSelectedJob.ProjectManagerName
+            Width: =400
+            X: =700
+            Y: =135
+      - lblDetailName7:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Status"
+            Width: =200
+            X: =700
+            Y: =170
+      - lblDetailVal7:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =If(!IsBlank(varSelectedJob.Status), varSelectedJob.Status.Value, "New")
+            Width: =400
+            X: =700
+            Y: =190
+      - lblDetailName8:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Traffic Crew"
+            Width: =200
+            X: =700
+            Y: =225
+      - lblDetailVal8:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =If(varSelectedJob.Arrowboard, "Yes", "No")
+            Width: =400
+            X: =700
+            Y: =245
+      - lblDetailName9:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Emergency Crew"
+            Width: =200
+            X: =700
+            Y: =280
+      - lblDetailVal9:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =If(varSelectedJob.Mobilization, "Yes", "No")
+            Width: =400
+            X: =700
+            Y: =300
+      - lblDetailName10:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="Arrow Board"
+            Width: =200
+            X: =700
+            Y: =335
+      - lblDetailVal10:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =If(varSelectedJob.SVC_Arrowboard, "Yes", "No")
+            Width: =400
+            X: =700
+            Y: =355
+      - lblDetailName11:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            FontWeight: =FontWeight.Bold
+            Size: =10
+            Text: ="PO w/ Vehicle"
+            Width: =200
+            X: =700
+            Y: =390
+      - lblDetailVal11:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(26, 29, 39, 1)
+            Size: =14
+            Text: =If(varSelectedJob.BlueLightOfficer, "Yes", "No")
+            Width: =400
+            X: =700
+            Y: =410

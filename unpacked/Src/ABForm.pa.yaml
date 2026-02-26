@@ -497,7 +497,7 @@ Screens:
             FontSize: =14
             Height: =40
             Placeholder: ="Select an end date..."
-            SelectedDate: =If(!IsBlank(varPassEndDate), Text(varPassEndDate, "mm/dd/yyyy"), "")
+            SelectedDate: =If(!IsBlank(varPassDate), Text(varPassDate, "mm/dd/yyyy"), "")
             Width: =220
             X: =txtABNumber.X + txtABNumber.Width + 16
             Y: =txtABNumber.Y
