@@ -1165,7 +1165,7 @@ Screens:
             DisplayMode: =DisplayMode.View
             Fill: =Color.White
             Font: =Font.'Open Sans'
-            Height: '=If(togPO.Checked && togArrowBoard.Checked, 400, If(togPO.Checked || togArrowBoard.Checked, 340, 220))   '
+            Height: '=If(varNeedOR, 340, 220)   '
             HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
@@ -1188,6 +1188,52 @@ Screens:
             Width: =360
             X: =btnSuccessCard_2.X
             Y: =btnSuccessCard_2.Y
+      - lblNextSteps_AB:
+          Control: Label@2.5.1
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Size: =12
+            Text: =If(varLang = "EN", "NEXT STEPS:", "Próximos Pasos:")
+            Visible: =varShowSuccess && varNeedOR
+            X: =btnSuccessCard_2.X + 20
+            Y: =btnSuccessCard_2.Y + 160
+      - btnGoOR_AB:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_1
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(123, 94, 167, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: |-
+              =Set(varShowSuccess, false);
+              Set(varNeedOR, false);
+              Set(varPassJobID, varPendingJobID);
+              Set(varPassJobName, varPendingJobName);
+              Set(varPassDate, varPendingDate);
+              Set(varPassEndDate, varPendingEndDate);
+              Set(varPassLocation, varPendingLocation);
+              Set(varPassCustomer, varPendingCustomer);
+              Set(varPassCrewItems, varPendingCrewItems);
+              Navigate(ORForm, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "Fill OR Report →", "Llenar Reporte OR →")
+            Visible: =varShowSuccess && varNeedOR
+            Width: =btnSuccessCard_2.Width - 40
+            X: =btnSuccessCard_2.X + 20
+            Y: =lblNextSteps_AB.Y + 50
       - btnTCNewForm_2:
           Control: Classic/Button@2.2.0
           Group: SuccessPopUp_1
@@ -1203,6 +1249,7 @@ Screens:
             HoverFill: =RGBA(105, 80, 145, 1)
             OnSelect: |-
               =Set(varShowSuccess, false);
+              Set(varNeedOR, false);
               Reset(txtABNumber);
               Reset(cmboABDriver);
               Reset(drpABPickupHour);
@@ -1255,7 +1302,8 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =RGBA(105, 80, 145, 1)
             OnSelect: |-
-              =Set(varShowSuccess, false); 
+              =Set(varShowSuccess, false);
+              Set(varNeedOR, false);
               Navigate(HomeScreen, ScreenTransition.None);
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill

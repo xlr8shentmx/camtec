@@ -16,4 +16,7 @@ App:
       Set(varTCValidate, false);
       Set(varORValidate, false);
       Set(varABValidate, false);
+
+      Set(varNeedAB, false);
+      Set(varNeedOR, false);
     Theme: =PowerAppsTheme

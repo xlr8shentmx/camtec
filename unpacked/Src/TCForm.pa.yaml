@@ -1148,11 +1148,22 @@ Screens:
             HoverColor: =RGBA(255, 255, 255, 1)
             HoverFill: =RGBA(40, 100, 220, 1)
             OnSelect: |-
-              =Set(varShowSuccess, false); 
-              Set(varPassJobID, varNewJob.ID); 
-              Set(varPassJobName, varNewJob.JobName); 
-              Set(varPassDate, dpTCStartDate.SelectedDate); 
-              Set(varPassCrewDriver, First(comboCTCrew.SelectedItems).LastName); 
+              =Set(varShowSuccess, false);
+              Set(varNeedOR, togPO.Checked);
+              Set(varNeedAB, false);
+              // Store data for pending OR form
+              Set(varPendingJobID, varNewJob.ID);
+              Set(varPendingJobName, varNewJob.JobName);
+              Set(varPendingDate, dpTCStartDate.SelectedDate);
+              Set(varPendingEndDate, dpTCEndDate.SelectedDate);
+              Set(varPendingLocation, txtTCLocation.Value);
+              Set(varPendingCustomer, drpTCCustomer.Selected.CustomerName);
+              Set(varPendingCrewItems, comboCTCrew.SelectedItems);
+              // Pass through AB-specific data
+              Set(varPassJobID, varNewJob.ID);
+              Set(varPassJobName, varNewJob.JobName);
+              Set(varPassDate, dpTCStartDate.SelectedDate);
+              Set(varPassCrewDriver, First(comboCTCrew.SelectedItems).LastName);
               Navigate(ABForm, ScreenTransition.None)
             PressedBorderColor: =Self.Fill
             PressedColor: =Self.Fill
@@ -1177,6 +1188,14 @@ Screens:
             HoverFill: =RGBA(105, 80, 145, 1)
             OnSelect: |-
               =Set(varShowSuccess, false);
+              Set(varNeedAB, togArrowBoard.Checked);
+              Set(varNeedOR, false);
+              // Store data for pending AB form
+              Set(varPendingJobID, varNewJob.ID);
+              Set(varPendingJobName, varNewJob.JobName);
+              Set(varPendingDate, dpTCStartDate.SelectedDate);
+              Set(varPendingCrewDriver, First(comboCTCrew.SelectedItems).LastName);
+              // Pass through OR-specific data
               Set(varPassJobID, varNewJob.ID);
               Set(varPassJobName, varNewJob.JobName);
               Set(varPassDate, dpTCStartDate.SelectedDate);
