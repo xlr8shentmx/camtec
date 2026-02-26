@@ -503,45 +503,185 @@ Screens:
             Width: =200
             X: =270
             Y: =581
-      - htmlRecentJobs:
-          Control: HtmlViewer@2.1.0
+      - lblHdrJobName:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            PaddingLeft: =12
+            Size: =10
+            Text: ="JOB NAME"
+            Width: =200
+            X: =270
+            Y: =615
+      - lblHdrCustomer:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            PaddingLeft: =12
+            Size: =10
+            Text: ="CUSTOMER"
+            Width: =180
+            X: =470
+            Y: =615
+      - lblHdrLocation:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            PaddingLeft: =12
+            Size: =10
+            Text: ="LOCATION"
+            Width: =200
+            X: =650
+            Y: =615
+      - lblHdrDate:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            PaddingLeft: =12
+            Size: =10
+            Text: ="DATE"
+            Width: =130
+            X: =850
+            Y: =615
+      - lblHdrJobNum:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            PaddingLeft: =12
+            Size: =10
+            Text: ="JOB #"
+            Width: =130
+            X: =980
+            Y: =615
+      - lblHdrStatus:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =28
+            PaddingLeft: =12
+            Size: =10
+            Text: ="STATUS"
+            Width: =130
+            X: =1110
+            Y: =615
+      - rectRecentJobsHdrLine:
+          Control: Rectangle@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(220, 222, 228, 1)
+            Height: =1
+            Width: =1056
+            X: =270
+            Y: =643
+      - galRecentJobs As Gallery.galleryVertical:
           Properties:
             BorderColor: =RGBA(220, 222, 228, 1)
             BorderThickness: =1
             Fill: =Color.White
-            Font: =Font.'Open Sans'
-            Height: =370
-            HtmlText: |-
-              ="<style>"&
-              "*{font-family:'Open Sans',Segoe UI,sans-serif}"&
-              "table{width:100%;border-collapse:collapse}"&
-              "th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;"&
-              "color:#6b7080;text-transform:uppercase;border-bottom:2px solid #e5e7eb;background:#fafbfc}"&
-              "td{padding:12px 14px;text-align:left;font-size:13px;color:#1a1d27;border-bottom:1px solid #f0f1f3}"&
-              "tr:hover td{background:#f5f6f8}"&
-              "</style>"&
-              "<table><tr><th>Job Name</th><th>Customer</th><th>Location</th>"&
-              "<th>Date</th><th>Job #</th><th>Status</th></tr>"&
-              Concat(
-                  FirstN(SortByColumns('TC Form', "Created", SortOrder.Descending), 20),
-                  "<tr>"&
-                  "<td>"& Title &"</td>"&
-                  "<td>"& If(!IsBlank(CustomerID_x003a_CustomerName), CustomerID_x003a_CustomerName.Value, "") &"</td>"&
-                  "<td>"& Location &"</td>"&
-                  "<td>"& Text(Start_x0020_Date, "mm/dd/yyyy") &"</td>"&
-                  "<td>"& JobNumber &"</td>"&
-                  "<td>"& If(!IsBlank(Status), Status.Value, "New") &"</td>"&
-                  "</tr>"
-              ) &
-              "</table>"
-            PaddingBottom: =0
-            PaddingLeft: =0
-            PaddingRight: =0
-            PaddingTop: =0
-            Size: =13
+            Height: =340
+            Items: =SortByColumns('TC Form', "Created", SortOrder.Descending)
+            LoadingSpinnerColor: =RGBA(232, 93, 38, 1)
+            OnSelect: |-
+              =Set(varSelectedJob, galRecentJobs.Selected);
+              Navigate(JobDetailScreen, ScreenTransition.None)
+            TemplatePadding: =0
+            TemplateSize: =48
             Width: =1056
             X: =270
-            Y: =615
+            Y: =648
+          Children:
+            - lblGalJobName:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(26, 29, 39, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  PaddingLeft: =12
+                  Size: =11
+                  Text: =ThisItem.Title
+                  Width: =200
+                  X: =0
+            - lblGalCustomer:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(26, 29, 39, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  PaddingLeft: =12
+                  Size: =11
+                  Text: =If(!IsBlank(ThisItem.CustomerID_x003a_CustomerName), ThisItem.CustomerID_x003a_CustomerName.Value, "")
+                  Width: =180
+                  X: =200
+            - lblGalLocation:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(26, 29, 39, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  PaddingLeft: =12
+                  Size: =11
+                  Text: =ThisItem.Location
+                  Width: =200
+                  X: =380
+            - lblGalDate:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(26, 29, 39, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  PaddingLeft: =12
+                  Size: =11
+                  Text: =Text(ThisItem.Start_x0020_Date, "mm/dd/yyyy")
+                  Width: =130
+                  X: =580
+            - lblGalJobNum:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(26, 29, 39, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  PaddingLeft: =12
+                  Size: =11
+                  Text: =ThisItem.JobNumber
+                  Width: =130
+                  X: =710
+            - lblGalStatus:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =RGBA(26, 29, 39, 1)
+                  Font: =Font.'Open Sans'
+                  Height: =Parent.TemplateHeight
+                  PaddingLeft: =12
+                  Size: =11
+                  Text: =If(!IsBlank(ThisItem.Status), ThisItem.Status.Value, "New")
+                  Width: =130
+                  X: =840
+            - rectGalRowSep:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderThickness: =0
+                  Fill: =RGBA(235, 237, 240, 1)
+                  Height: =1
+                  Width: =Parent.TemplateWidth
+                  X: =0
+                  Y: =Parent.TemplateHeight - 1
       - Toggle1:
           Control: Classic/Toggle@2.1.0
           Properties:
