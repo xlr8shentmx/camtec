@@ -1,0 +1,991 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  JobCheckIn:
+    Properties:
+      Fill: =RGBA(244, 245, 247, 1)
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+      OnVisible: |-
+        =Set(varCICurrentTime, Now());
+        Set(varCIAssignmentID, Blank());
+        Set(varShowSubmitting, false);
+        Set(varShowSuccess, false);
+        Clear(colCICrewList);
+        Reset(drpCIJobNumber);
+        Reset(drpCIDriver);
+        Reset(drpCIHour);
+        Reset(drpCIMin);
+        Reset(drpCIAMPM);
+        Set(varCIResetToggle, true);
+        Reset(comboCICrewMembers);
+        Set(varCIResetToggle, false);
+        Set(varCIPhoto, Blank());
+        Set(varCIValidate, false)
+    Children:
+      - rectTCHdr_4:
+          Control: Rectangle@2.3.0
+          Group: header_grp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(27, 30, 43, 1)
+            Height: =58
+            Width: =Parent.Width
+      - btnOFHome_3:
+          Control: Classic/Button@2.2.0
+          Group: header_grp
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 122, 69, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(232, 93, 38, 0.1)
+            OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =6
+            RadiusBottomRight: =6
+            RadiusTopLeft: =6
+            RadiusTopRight: =6
+            Size: =13
+            Text: ="< Home"
+            Width: =90
+            X: =16
+            Y: =12
+      - lblUploadReceipts:
+          Control: Label@2.5.1
+          Group: header_grp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            Size: =17
+            Text: '=If(varLang = "EN", "Job Check-In", "Check de Llegada")  '
+            Width: =300
+            X: =172
+            Y: =12
+      - Rectangle4_4:
+          Control: Rectangle@2.3.0
+          Group: header_grp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(51, 55, 80, 1)
+            Height: =24
+            Width: =1
+            X: =114
+            Y: =17
+      - lblJobDetailsTitle_1:
+          Control: Label@2.5.1
+          Group: header_grp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(157, 162, 181, 1)
+            Font: =Font.'Open Sans'
+            Height: =24
+            Size: =12
+            Text: =
+            Width: =400
+            X: =lblUploadReceipts.X + lblUploadReceipts.Width + 10
+            Y: =16
+      - HtmlText1_1:
+          Control: HtmlViewer@2.1.0
+          Group: header_grp
+          Properties:
+            Fill: =RGBA(52, 199, 89, 0.12)
+            Font: =Font.'Open Sans'
+            Height: =33
+            HtmlText: ="<div style='width:32px; height:32px; background:rgba(232,93,38,0.12); border-radius:7px; display:flex; align-items:center; justify-content:center;'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#e85d26' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/></svg></div>"
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Width: =33
+            X: =130
+            Y: =13
+      - btnReceiptSubmit:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =RGBA(51, 55, 80, 1)
+            BorderThickness: =1
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =
+            Fill: =RGBA(52, 199, 89, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: '=RGBA(40, 175, 70, 1) '
+            OnSelect: "=Set(varCIValidate, true);\nIf(\n    IsBlank(drpCIJobNumber.Selected) ||\n    IsBlank(drpCIDriver.Selected) ||\n    CountRows(comboCICrewMembers.SelectedItems) = 0 ||\n    IsBlank(drpCIHour.Selected) ||\n    IsBlank(drpCIMin.Selected) ||\n    IsBlank(drpCIAMPM.Selected) ||\n    IsBlank(varCIPhoto),\n\n    Notify(\n        If(varLang = \"EN\", \"Please fill in all required fields\", \"Por favor complete todos los campos requeridos\"),\n        NotificationType.Error\n    ),\n\n    // Show spinner\n    Set(varShowSubmitting, true);\n\n    // All valid — patch to Daily Assignments\n    IfError(\n    Patch(\n        'Daily Assignments',\n        LookUp('Daily Assignments', ID = varCIAssignmentID),\n        {\n            CheckedIn: true,\n            Driver: {\n                Id: drpCIDriver.Selected.ID,\n                Value: drpCIDriver.Selected.FullName\n            },\n            CheckInDateTime: DateTimeValue(\n                Text(Today(), \"mm/dd/yyyy\") & \" \" &\n                drpCIHour.Selected.Value & \":\" &\n                drpCIMin.Selected.Value & \" \" &\n                drpCIAMPM.Selected.Value\n            )\n        }\n    ),\n    Notify(If(varLang = \"EN\", \"Check-in failed: \" & FirstError.Message, \"Error al registrar: \" & FirstError.Message), NotificationType.Error)\n    );\n\n    // Hide spinner, show success\n    Set(varShowSubmitting, false);\n    Set(varShowSuccess, true);\n\n    // Run Power Automate flow for email + photo attachment\n    \n    CheckIn_EmailNotification.Run(\n        drpCIJobNumber.Selected.ID,\n        \"checkin_photo.jpg\",\n        {\n            name: \"checkin_photo.jpg\",\n            contentBytes: varCIPhoto\n        },\n        drpCIJobNumber.Selected.JobNumber,\n        drpCIDriver.Selected.FullName,\n        /*Concat(comboCICrewMembers.SelectedItems, crewMemberID.FullName, \", \"),*/\n        drpCIHour.Selected.Value & \":\" & drpCIMin.Selected.Value & \" \" & drpCIAMPM.Selected.Value,\n        drpCIJobNumber.Selected.crewNumber\n    );\n\n    // Store submission details for success screen\n    Set(varCISubmittedJob, drpCIJobNumber.Selected.JobNumber);\n    Set(varCISubmittedDriver, drpCIDriver.Selected.FullName);\n    Set(varCISubmittedTime, drpCIHour.Selected.Value & \":\" & drpCIMin.Selected.Value & \" \" & drpCIAMPM.Selected.Value);\n    Set(varCISubmittedCrew, Concat(comboCICrewMembers.SelectedItems, crewMemberID.Value, \", \"));\n    Set(varCIValidate, false)\n\n\n)"
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Size: =12
+            Text: ="Check In ✓"
+            Width: =105
+            X: =Parent.Width - 130
+            Y: '=13 '
+      - rectJobAssignmentInfo:
+          Control: Classic/Button@2.2.0
+          Group: jobAssignment
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =300
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =800
+            X: =28
+            Y: =82
+      - htmlReceiptDetailsLabel:
+          Control: Label@2.5.1
+          Group: jobAssignment
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "JOB ASSIGNMENT", "ASIGNACIÓN DE TRABAJO")
+            Width: =300
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =rectJobAssignmentInfo.Y + 14
+      - htmlCIJobNumberLabel:
+          Control: HtmlViewer@2.1.0
+          Group: jobAssignment
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Job Number <span style='color:#ef4444;'>*</span></span>", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Número de Trabajo <span style='color:#ef4444;'>*</span></span>")
+            Width: =210
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =htmlReceiptDetailsLabel.Y + htmlReceiptDetailsLabel.Height + 12
+      - drpCIJobNumber:
+          Control: DropDown@0.0.45
+          Group: jobAssignment
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varCIValidate && IsBlank(drpCIJobNumber.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            FontSize: =14
+            Height: =40
+            Items: =Filter('Daily Assignments', CheckedIn = false || IsBlank(CheckedIn))
+            OnChange: |
+              =Set(varCIAssignmentID, drpCIJobNumber.Selected.ID);
+              ClearCollect(
+                  colCICrewList,
+                  Filter('Daily Assignments Crew List', AssignmentID.Id = varCIAssignmentID)
+              );
+              Reset(comboCICrewMembers)
+            Width: =rectJobAssignmentInfo.Width - 44
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =htmlCIJobNumberLabel.Y + htmlCIJobNumberLabel.Height + 4
+          Children:
+            - ID1:
+                Control: DropDownDataField@1.5.0
+                Variant: textualColumn
+                IsLocked: true
+                Properties:
+                  FieldDisplayName: ="ID"
+                  FieldName: ="ID"
+                  FieldType: ="n"
+                  Order: =2
+      - htmlCILocationLabel:
+          Control: HtmlViewer@2.1.0
+          Group: jobAssignment
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Location</span>", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Dirección</span>")
+            Width: =210
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =drpCIJobNumber.Y + drpCIJobNumber.Height + 12
+      - txtCILocation:
+          Control: TextInput@0.0.54
+          Group: jobAssignment
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varCIValidate && IsBlank(txtCILocation.Value), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            FontSize: =15
+            Height: =40
+            Value: =drpCIJobNumber.Selected.Location
+            Width: =rectJobAssignmentInfo.Width - 44
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =htmlCILocationLabel.Y + htmlCILocationLabel.Height + 4
+      - rectCIDriverCard:
+          Control: Classic/Button@2.2.0
+          Group: driverCheckIn
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =226
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =rectJobAssignmentInfo.Width
+            X: '=rectJobAssignmentInfo.X '
+            Y: =rectJobAssignmentInfo.Y + rectJobAssignmentInfo.Height + 16
+      - lblCIDriverSectionLabel:
+          Control: Label@2.5.1
+          Group: driverCheckIn
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "DRIVER CHECKING IN", "CONDUCTOR QUE REGISTRA")
+            Width: =300
+            X: =rectCIDriverCard.X + 22
+            Y: =rectCIDriverCard.Y + 14
+      - htmlCIDriverLabel:
+          Control: HtmlViewer@2.1.0
+          Group: driverCheckIn
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Select Driver <span style='color:#ef4444;'>*</span></span>", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Seleccionar Conductor <span style='color:#ef4444;'>*</span></span>")
+            Width: =210
+            X: =rectCIDriverCard.X + 22
+            Y: =lblCIDriverSectionLabel.Y + lblCIDriverSectionLabel.Height + 12
+      - drpCIDriver:
+          Control: ComboBox@0.0.51
+          Group: driverCheckIn
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varCIValidate && IsBlank(drpCIDriver.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderRadius: =8
+            FontSize: =15
+            Height: =40
+            Items: |-
+              =AddColumns(
+                  Filter('Crew Members', Status.Value = "Active"),
+                  Fullname,
+                  FirstName & " " & LastName
+              )
+            Width: =rectCIDriverCard.Width - 44
+            X: =rectCIDriverCard.X + 22
+            Y: =htmlCIDriverLabel.Y + htmlCIDriverLabel.Height + 6
+          Children:
+            - Fullname1_3:
+                Control: ComboBoxDataField@1.5.0
+                Variant: textualColumn
+                IsLocked: true
+                Properties:
+                  FieldDisplayName: ="Fullname"
+                  FieldName: ="Fullname"
+                  FieldType: ="s"
+                  Order: =6
+      - htmlCIDriverPreview:
+          Control: HtmlViewer@2.1.0
+          Group: driverCheckIn
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =80
+            HtmlText: |-
+              ="<div style='display:flex; align-items:center; gap:10px; background:#fafbfc; border:1px solid #e2e4e9; border-radius:8px; padding:9px 14px;'>
+                <div style='width:30px; height:30px; border-radius:50%; background:#e85d26; color:white; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0;'>"
+                & Left(drpCIDriver.Selected.FirstName, 1)
+                & Left(drpCIDriver.Selected.LastName, 1)
+                & "</div>
+                <div>
+                  <div style='font-size:15px; font-weight:600; color:#1a1d27;'>" & drpCIDriver.Selected.Fullname & "</div>
+                  <div style='font-size:15px; color:#999ba8;'>"
+                & If(varLang = "EN", "Crew Member · Driver", "Miembro del Equipo · Conductor")
+                & "</div>
+                </div>
+              </div>"
+            PaddingLeft: =0
+            PaddingRight: =0
+            Visible: =!IsBlank(drpCIDriver.Selected)
+            Width: =rectCIDriverCard.Width - 44
+            X: =rectCIDriverCard.X + 22
+            Y: =drpCIDriver.Y + drpCIDriver.Height + 10
+      - rectCICrewCard:
+          Control: Classic/Button@2.2.0
+          Group: crewMembersgrp
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =160
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =rectJobAssignmentInfo.Width
+            X: =rectCIDriverCard.X
+            Y: =rectCIDriverCard.Y + rectCIDriverCard.Height + 16
+      - lblCIrewSectionLabel:
+          Control: Label@2.5.1
+          Group: crewMembersgrp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "CREW ON SITE", "EQUIPO DE TRABAJO")
+            Width: =300
+            X: =rectCICrewCard.X + 22
+            Y: =rectCICrewCard.Y + 14
+      - htmlCICrewLabel:
+          Control: HtmlViewer@2.1.0
+          Group: crewMembersgrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Crew Members <span style='color:#ef4444;'>*</span></span>", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Miembros del Equipo <span style='color:#ef4444;'>*</span></span>")
+            Width: =210
+            X: =rectCICrewCard.X + 22
+            Y: =lblCIrewSectionLabel.Y + lblCIrewSectionLabel.Height + 12
+      - comboCICrewMembers:
+          Control: ComboBox@0.0.51
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderRadius: =8
+            DefaultSelectedItems: =If(varCIResetToggle, colCICrewList, colCICrewList)
+            FontSize: =13
+            Height: =40
+            Items: =Filter('Daily Assignments Crew List', AssignmentID.Id = varCIAssignmentID)
+            SelectMultiple: =true
+            Visible: =false
+            Width: =rectCIDriverCard.Width - 44
+            X: =rectCIDriverCard.X + 22
+            Y: =743
+          Children:
+            - crewMemberID:FullName1:
+                Control: ComboBoxDataField@1.5.0
+                Variant: textualColumn
+                IsLocked: true
+                Properties:
+                  FieldDisplayName: ="crewMemberID:FullName"
+                  FieldName: ="crewMemberID_x003a_FullName"
+                  FieldType: ="E"
+                  Order: =2
+      - galCICrewPills:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Horizontal_TwoTextOneImageVariant_ver5.0
+          Group: crewMembersgrp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =61
+            Items: =comboCICrewMembers.SelectedItems
+            TemplateSize: =200
+            Width: =rectCICrewCard.Width - 44
+            X: =rectCICrewCard.X + 22
+            Y: '=htmlCICrewLabel.Y + htmlCICrewLabel.Height + 6  '
+          Children:
+            - HtmlText7:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: =Font.'Open Sans'
+                  Height: =60
+                  HtmlText: |
+                    ="<div style='display:flex; align-items:center; justify-content:space-between; background:#fafbfc; border:1px solid #e2e4e9; border-radius:8px; padding:9px 14px; margin-bottom:6px;'>
+                      <div style='font-size:15px; font-weight:600; color:#1a1d27;'>"
+                      & ThisItem.'crewMemberID:FullName'.Value
+                      & "</div>
+                      <div style='width:22px; height:22px; border-radius:6px; background:rgba(52,199,89,0.08); border:1px solid rgba(52,199,89,0.25); display:flex; align-items:center; justify-content:center; font-size:15px; color:#34c759;'>✓</div>
+                    </div>"
+                  OnSelect: =Select(Parent)
+                  Visible: =galCICrewPills.AllItemsCount > 0
+      - rectCITimeCard:
+          Control: Classic/Button@2.2.0
+          Group: arrivalTimeGrp
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(255, 255, 255, 1)
+            Font: =Font.'Open Sans'
+            Height: =182
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =rectJobAssignmentInfo.Width
+            X: '=rectCICrewCard.X    '
+            Y: =rectCICrewCard.Y + rectCICrewCard.Height + 16
+      - lblTimeSectionLabel:
+          Control: Label@2.5.1
+          Group: arrivalTimeGrp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "ARRIVAL TIME", "HORA DE LLEGADA")
+            Width: =300
+            X: =rectCITimeCard.X + 22
+            Y: =rectCITimeCard.Y + 14
+      - htmlCITimeInLabel:
+          Control: HtmlViewer@2.1.0
+          Group: arrivalTimeGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Time In <span style='color:#ef4444;'>*</span></span>", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Hora de Entrada <span style='color:#ef4444;'>*</span></span>")
+            Width: =210
+            X: =rectCITimeCard.X + 22
+            Y: =lblTimeSectionLabel.Y + lblTimeSectionLabel.Height + 12
+      - drpCIHour:
+          Control: DropDown@0.0.45
+          Group: arrivalTimeGrp
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varCIValidate && IsBlank(drpCIHour.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            DefaultSelectedItems: |-
+              ={Value: Text(If(Hour(varCICurrentTime) = 0, 12, If(Hour(varCICurrentTime) > 12, Hour(varCICurrentTime) - 12, Hour(varCICurrentTime))))}
+            FontSize: =15
+            Height: =40
+            Items: =["1","2","3","4","5","6","7","8","9","10","11","12"]
+            Width: =100
+            X: =rectCITimeCard.X + 22
+            Y: =htmlCITimeInLabel.Y + htmlCITimeInLabel.Height + 6
+      - drpCIMin:
+          Control: DropDown@0.0.45
+          Group: arrivalTimeGrp
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varCIValidate && IsBlank(drpCIMin.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            DefaultSelectedItems: |
+              ={Value: Text(Minute(varCICurrentTime), "00")}
+            FontSize: =16
+            Height: =40
+            Items: |-
+              =ForAll(
+                  Sequence(60, 0),
+                  Text(Value, "00")
+              )
+            Width: =100
+            X: =drpCIHour.X + 120
+            Y: =drpCIHour.Y
+      - drpCIAMPM:
+          Control: DropDown@0.0.45
+          Group: arrivalTimeGrp
+          Properties:
+            BasePaletteColor: =RGBA(232, 93, 38, 1)
+            BorderColor: =If(varCIValidate && IsBlank(drpCIAMPM.Selected), RGBA(239, 68, 68, 1), RGBA(220, 223, 229, 1))
+            BorderThickness: =1.5
+            DefaultSelectedItems: |-
+              ={Value: If(Hour(varCICurrentTime) >= 12, "PM", "AM")}
+            FontSize: =16
+            Height: =40
+            Items: =["AM","PM"]
+            Width: =100
+            X: =drpCIMin.X + 120
+            Y: =drpCIHour.Y
+      - lblTimeInLabel_6:
+          Control: Label@2.5.1
+          Group: arrivalTimeGrp
+          Properties:
+            Align: =Align.Center
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Size: =12
+            Text: =":"
+            Width: =20
+            X: '=drpCIHour.X + 100 '
+            Y: =drpCIHour.Y
+      - htmlReceiptCrewLabel:
+          Control: HtmlViewer@2.1.0
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =36
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Job Number <span style='color:#ef4444;'>*</span></span>", "<span style='font-size:15px; font-weight:600; color:#6b7080;'>Número de Trabajo <span style='color:#ef4444;'>*</span></span>")
+            Width: =210
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =htmlReceiptDetailsLabel.Y + htmlReceiptDetailsLabel.Height + 12
+      - rectCIPhotoCard:
+          Control: Classic/Button@2.2.0
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =addPicCICamera.Y + addPicCICamera.Height - rectCIPhotoCard.Y + 18
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =1366 - rectJobAssignmentInfo.X - rectJobAssignmentInfo.Width - 48
+            X: =rectJobAssignmentInfo.X + rectJobAssignmentInfo.Width + 20
+            Y: =rectJobAssignmentInfo.Y
+      - lblCIPhotoSectionLabel:
+          Control: Label@2.5.1
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "SITE PHOTO", "FOTO DEL SITIO")
+            Width: =300
+            X: =rectCIPhotoCard.X + 22
+            Y: '=rectCIPhotoCard.Y + 14   '
+      - btnCamera_1:
+          Control: Classic/Button@2.2.0
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(26, 29, 39, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =RGBA(232, 93, 38, 1)
+            HoverColor: =RGBA(232, 93, 38, 1)
+            HoverFill: =RGBA(232, 93, 38, 0.08)
+            PaddingLeft: =30
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =14
+            Text: =If(varLang = "EN", "Camera", "Cámara")
+            Width: =(rectCIPhotoCard.Width - 54) / 2
+            X: =rectCIPhotoCard.X + 22
+            Y: =rectCIPhotoPreview.Y + rectCIPhotoPreview.Height + 12
+      - btnGallery_1:
+          Control: Classic/Button@2.2.0
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(26, 29, 39, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            HoverBorderColor: =RGBA(232, 93, 38, 1)
+            HoverColor: =RGBA(232, 93, 38, 1)
+            HoverFill: =RGBA(232, 93, 38, 0.08)
+            PaddingLeft: =30
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =14
+            Text: =If(varLang = "EN", "Gallery", "Galería")
+            Width: =(rectCIPhotoCard.Width - 54) / 2
+            X: =addPicCICamera.X + addPicCICamera.Width + 10
+            Y: =addPicCICamera.Y
+      - addPicCICamera:
+          Control: AddMedia@2.2.1
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            ChangePictureText: =
+            DisplayMode: =If(CountRows(colTCPhotos) >= 7, DisplayMode.Disabled, DisplayMode.Edit)
+            Fill: =Color.Transparent
+            Height: =btnCamera_1.Height
+            HoverFill: =Color.Transparent
+            OnChange: =Set(varCIPhoto, addPicCICamera.Media)
+            PressedFill: =Color.Transparent
+            Size: =25
+            Text: =
+            UseMobileCamera: =true
+            Width: =btnCamera_1.Width
+            X: =rectCIPhotoCard.X + 22
+            Y: =rectCIPhotoPreview.Y + rectCIPhotoPreview.Height + 12
+      - addPicCIGallery:
+          Control: AddMedia@2.2.1
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            ChangePictureText: =
+            DisplayMode: =If(CountRows(colTCPhotos) >= 7, DisplayMode.Disabled, DisplayMode.Edit)
+            Fill: =Color.Transparent
+            Height: =btnGallery_1.Height
+            HoverFill: =Color.Transparent
+            OnChange: =Set(varCIPhoto, addPicCIGallery.Media)
+            PressedFill: =Color.Transparent
+            Size: =25
+            Text: =
+            Width: =btnGallery_1.Width
+            X: =addPicCICamera.X + addPicCICamera.Width + 10
+            Y: =addPicCICamera.Y
+      - htmlCIPhotoNote:
+          Control: HtmlViewer@2.1.0
+          Group: sitePhoto
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =44
+            HtmlText: =If(varLang = "EN", "<span style='font-size:15px; color:#999ba8;'>1 photo required per check-in</span>", "<span style='font-size:15px; color:#999ba8;'>Se requiere 1 foto por check-in</span>")
+            Size: =15
+            Width: =264
+            X: =rectCIPhotoCard.X + 22
+            Y: =lblCIPhotoSectionLabel.Y + lblCIPhotoSectionLabel.Height + 4
+      - rectCIPhotoPreview:
+          Control: Rectangle@2.3.0
+          Group: sitePhoto
+          Properties:
+            BorderColor: '=RGBA(226, 228, 233, 1)  '
+            Fill: =RGBA(56, 96, 178, 1)
+            Height: =200
+            Visible: =!IsBlank(varCIPhoto)
+            Width: '=rectCIPhotoCard.Width - 44  '
+            X: =rectCIPhotoCard.X + 22
+            Y: =htmlCIPhotoNote.Y + htmlCIPhotoNote.Height + 14
+      - imgCIPhotoPreview:
+          Control: Image@2.2.3
+          Group: sitePhoto
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: '=rectCIPhotoPreview.Height   '
+            Image: =varCIPhoto
+            ImagePosition: =ImagePosition.Fill
+            Visible: =!IsBlank(varCIPhoto)
+            Width: '=rectCIPhotoPreview.Width    '
+            X: '=rectCIPhotoPreview.X    '
+            Y: =rectCIPhotoPreview.Y
+      - btnCIRemovePhoto:
+          Control: Classic/Button@2.2.0
+          Group: sitePhoto
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =Color.White
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(0, 0, 0, 0.6)
+            Font: =Font.'Open Sans'
+            Height: =22
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            OnSelect: =Set(varCIPhoto, Blank()); Reset(addPicCIGallery); Reset(addPicCICamera)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =10
+            Text: ="x"
+            Visible: =!IsBlank(varCIPhoto)
+            Width: =22
+            X: =rectCIPhotoPreview.X + rectCIPhotoPreview.Width - 30
+            Y: '=rectCIPhotoPreview.Y + 8    '
+      - htmlCIPhotoEmpty:
+          Control: HtmlViewer@2.1.0
+          Group: sitePhoto
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =200
+            HtmlText: |-
+              =If(varLang = "EN", "<div style='display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:8px;'><div style='font-size:28px;'>📷</div><div style='font-size:13px; font-weight:600; color:#999ba8;'>No photo captured yet</div><div style='font-size:15px; color:#c0c3cc;'>Use the buttons below to add a photo</div></div>", "<div style='display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:8px;'><div style='font-size:28px;'>📷</div><div style='font-size:15px; font-weight:600; color:#999ba8;'>Sin foto capturada</div><div style='font-size:11px; color:#c0c3cc;'>Use los botones de abajo para agregar una foto</div></div>")
+            Size: =15
+            Visible: =IsBlank(varCIPhoto)
+            Width: '=rectCIPhotoCard.Width - 44  '
+            X: =rectCIPhotoCard.X + 22
+            Y: '=htmlCIPhotoNote.Y + htmlCIPhotoNote.Height + 14 '
+      - icoTCCamera_1:
+          Control: Icon@0.0.7
+          Group: sitePhoto
+          Properties:
+            Height: =25
+            Icon: ="Camera"
+            IconColor: =RGBA(26, 29, 39, 1)
+            Width: =25
+            X: =btnCamera_1.X + 36
+            Y: =addPicCICamera.Y + 8
+      - icoTCGallery_1:
+          Control: Icon@0.0.7
+          Group: sitePhoto
+          Properties:
+            Height: =25
+            Icon: ="GridDots"
+            IconColor: =RGBA(26, 29, 39, 1)
+            Width: =25
+            X: =btnGallery_1.X + 36
+            Y: =btnCamera_1.Y + 8
+      - rectCISummaryCard:
+          Control: Classic/Button@2.2.0
+          Group: checkInGrp
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =htmlCISumPhoto.Y + htmlCISumPhoto.Height - rectCISummaryCard.Y + 18
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =rectCIPhotoCard.Width
+            X: =rectCIPhotoCard.X
+            Y: =rectCIPhotoCard.Y + rectCIPhotoCard.Height + 16
+      - lblCIPhotoSectionLabel_1:
+          Control: Label@2.5.1
+          Group: checkInGrp
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "CHECK-IN SUMMARY", "RESUMEN DE CHECK-IN")
+            Width: =300
+            X: =rectCIPhotoCard.X + 22
+            Y: =rectCISummaryCard.Y + 14
+      - htmlCISumJob:
+          Control: HtmlViewer@2.1.0
+          Group: checkInGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: |-
+              ="<div style='display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f0f1f3;'><span style='font-size:18px; color:#999ba8; font-weight:600;'>" & If(varLang = "EN", "Job #", "Trabajo #") & "</span><span style='font-size:18px; font-weight:700; color:#000000;'>" & varCIAssignmentID & "</span></div>"
+            Width: =rectCISummaryCard.Width - 44
+            X: =rectCISummaryCard.X + 22
+            Y: =lblCIPhotoSectionLabel_1.Y + lblCIPhotoSectionLabel_1.Height + 10
+      - htmlCISumAssignment:
+          Control: HtmlViewer@2.1.0
+          Group: checkInGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: |-
+              ="<div style='display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f0f1f3;'><span style='font-size:18px; color:#999ba8; font-weight:600;'>" & If(varLang = "EN", "Job Name", "Nombre del Trabajo") & "</span><span style='font-size:18px; font-weight:700; color:#e85d26;'>" & drpCIJobNumber.Selected.JobNumber & "</span></div>"
+            Width: =rectCISummaryCard.Width - 44
+            X: =rectCISummaryCard.X + 22
+            Y: =htmlCISumJob.Y + htmlCISumJob.Height + 2
+      - htmlCISumDriver:
+          Control: HtmlViewer@2.1.0
+          Group: checkInGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: |-
+              ="<div style='display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f0f1f3;'><span style='font-size:18px; color:#999ba8; font-weight:600;'>" & If(varLang = "EN", "Driver", "Conductor") & "</span><span style='font-size:18px; font-weight:700; color:#1a1d27;'>" & drpCIDriver.Selected.FullName & "</span></div>"
+            Width: =rectCISummaryCard.Width - 44
+            X: =rectCISummaryCard.X + 22
+            Y: =htmlCISumAssignment.Y + htmlCISumAssignment.Height + 2
+      - htmlCISumCrew:
+          Control: HtmlViewer@2.1.0
+          Group: checkInGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: |-
+              ="<div style='display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f0f1f3;'><span style='font-size:18px; color:#999ba8; font-weight:600;'>" & If(varLang = "EN", "Crew Size", "Tamaño del Equipo") & "</span><span style='font-size:18px; font-weight:700; color:#1a1d27;'>" & CountRows(comboCICrewMembers.SelectedItems) & If(varLang = "EN", " members", " miembros") & "</span></div>"
+            Width: =rectCISummaryCard.Width - 44
+            X: =rectCISummaryCard.X + 22
+            Y: =htmlCISumDriver.Y + htmlCISumDriver.Height + 2
+      - htmlCISumTime:
+          Control: HtmlViewer@2.1.0
+          Group: checkInGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: |-
+              ="<div style='display:flex; justify-content:space-between; align-items:center; padding:6px 0; border-bottom:1px solid #f0f1f3;'><span style='font-size:18px; color:#999ba8; font-weight:600;'>" & If(varLang = "EN", "Arrival Time", "Hora de Llegada") & "</span><span style='font-size:18px; font-weight:700; color:#1a1d27;'>" & drpCIHour.Selected.Value & ":" & drpCIMin.Selected.Value & " " & drpCIAMPM.Selected.Value & "</span></div>"
+            Width: =rectCISummaryCard.Width - 44
+            X: =rectCISummaryCard.X + 22
+            Y: =htmlCISumCrew.Y + htmlCISumCrew.Height + 2
+      - htmlCISumPhoto:
+          Control: HtmlViewer@2.1.0
+          Group: checkInGrp
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: ="<div style='display:flex; justify-content:space-between; align-items:center; padding:6px 0;'><span style='font-size:18px; color:#999ba8; font-weight:500;'>" & If(varLang = "EN", "Photo", "Foto") & "</span><span style='font-size:18px; font-weight:700; color:" & If(IsBlank(varCIPhoto), "#ef4444;'>" & If(varLang = "EN", "⚠ Required", "⚠ Requerida"), "#34c759;'>" & If(varLang = "EN", "✓ Captured", "✓ Capturada")) & "</span></div>"
+            Width: =rectCISummaryCard.Width - 44
+            X: =rectCISummaryCard.X + 22
+            Y: =htmlCISumTime.Y + htmlCISumTime.Height + 2
+      - btnCILocationMap:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =RGBA(52, 120, 246, 0.2)
+            BorderThickness: =1
+            Color: =RGBA(52, 120, 246, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisabledColor: =RGBA(153, 155, 168, 1)
+            DisabledFill: =RGBA(240, 241, 243, 1)
+            DisplayMode: =If(IsBlank(drpCIJobNumber.Selected.locationMap), DisplayMode.Disabled, DisplayMode.Edit)
+            Fill: =RGBA(52, 120, 246, 0.08)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(52, 120, 246, 0.15)
+            OnSelect: =Launch(drpCIJobNumber.Selected.locationMap)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: |-
+              =If(varLang = "EN", "📍 Open in Google Maps", "📍 Abrir en Google Maps")
+            Width: =rectJobAssignmentInfo.Width - 44
+            X: =rectJobAssignmentInfo.X + 22
+            Y: =txtCILocation.Y + txtCILocation.Height + 20
+      - rectSubmitOverlay_3:
+          Control: Rectangle@2.3.0
+          Group: SubmitPopUp_2
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(0, 0, 0, 0.5)
+            Height: =Parent.Height
+            Visible: =varShowSubmitting Or varShowSuccess
+            Width: =Parent.Width
+      - rectSubmitCard_3:
+          Control: Classic/Button@2.2.0
+          Group: SubmitPopUp_2
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.Disabled
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: '=200 '
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Visible: '=varShowSubmitting   '
+            Width: '=300 '
+            X: =(Parent.Width - 300) / 2
+            Y: =(Parent.Height - 200) / 2
+      - htmlSpinner_3:
+          Control: HtmlViewer@2.1.0
+          Group: SubmitPopUp_2
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =100
+            HtmlText: ="<div style='text-align:center; font-family:Segoe UI, sans-serif;'><div style='font-size:18px; font-weight:700; color:#1a1d27; margin-bottom:4px;'>" & If(varLang = "EN", "Submitting...", "Enviando...") & "</div><div style='font-size:16px; color:#6b7080;'>" & If(varLang = "EN", "Checking In...", "Registrando Llegada...") & "</div></div>"
+            Visible: =varShowSubmitting
+            Width: =300
+            X: =(Parent.Width - 300) / 2
+            Y: =imgSpinner_3.Y + 60
+      - imgSpinner_3:
+          Control: Image@2.2.3
+          Group: SubmitPopUp_2
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =50
+            Image: ='camtec-spinner'
+            Visible: =varShowSubmitting
+            Width: =50
+            X: =rectSubmitCard_3.X + (rectSubmitCard_3.Width - 50) / 2
+            Y: =rectSubmitCard_3.Y + 30
+      - btnSuccessCard_3:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_2
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: '=If(varNeedAB, 340, 220)   '
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Visible: =varShowSuccess
+            Width: =360
+            X: =(Parent.Width - 360) / 2
+            Y: =(Parent.Height - 260) / 2
+      - htmlSuccess_3:
+          Control: HtmlViewer@2.1.0
+          Group: SuccessPopUp_2
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =160
+            HtmlText: |-
+              ="<div style='display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; font-family:Segoe UI, sans-serif; padding-top:20px;'><div style='width:56px; height:56px; border-radius:50%; background:rgba(52,199,89,0.1); display:flex; align-items:center; justify-content:center; margin-bottom:14px;'><span style='font-size:30px; color:#34c759;'>✓</span></div><div style='font-size:18px; font-weight:700; color:#1a1d27; margin-bottom:4px;'>" & If(varLang = "EN", "Check In Complete", "Entrada Registrada") & "</div><div style='font-size:15px; color:#6b7080;'>" & " Job #" & varCIAssignmentID & "</div></div>"
+            Visible: =varShowSuccess
+            Width: =360
+            X: =btnSuccessCard_3.X
+            Y: =btnSuccessCard_3.Y
+      - btnTCGoHome_3:
+          Control: Classic/Button@2.2.0
+          Group: SuccessPopUp_2
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(26, 29, 39, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(105, 80, 145, 1)
+            OnSelect: =Navigate(HomeScreen, ScreenTransition.None);
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Size: =13
+            Text: =If(varLang = "EN", "Go Home", "Ir al Inicio")
+            Visible: =varShowSuccess
+            Width: =(btnSuccessCard.Width - 52) / 2
+            X: =606
+            Y: =539
