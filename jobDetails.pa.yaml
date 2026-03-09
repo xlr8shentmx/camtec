@@ -1,0 +1,1004 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  jobDetails:
+    Properties:
+      Fill: =RGBA(244, 245, 247, 1)
+      LoadingSpinnerColor: =RGBA(56, 96, 178, 1)
+    Children:
+      - rectTCHdr_3:
+          Control: Rectangle@2.3.0
+          Group: header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(27, 30, 43, 1)
+            Height: =58
+            Width: =Parent.Width
+      - btnOFHome_2:
+          Control: Classic/Button@2.2.0
+          Group: header
+          Properties:
+            BorderColor: =ColorFade(Self.Fill, -15%)
+            Color: =RGBA(255, 122, 69, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =Color.Transparent
+            Font: =Font.'Open Sans'
+            Height: =34
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =RGBA(232, 93, 38, 0.1)
+            OnSelect: =Navigate(HomeScreen, ScreenTransition.None)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =6
+            RadiusBottomRight: =6
+            RadiusTopLeft: =6
+            RadiusTopRight: =6
+            Size: =13
+            Text: ="< Home"
+            Width: =90
+            X: =16
+            Y: =12
+      - lblJobSelectedJobName:
+          Control: Label@2.5.1
+          Group: header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =Color.White
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =34
+            Size: =17
+            Text: |-
+              ="Job ID #" &varSelectedJob.JobID.Value
+            Width: =134
+            X: =172
+            Y: =12
+      - Rectangle4_3:
+          Control: Rectangle@2.3.0
+          Group: header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =RGBA(51, 55, 80, 1)
+            Height: =24
+            Width: =1
+            X: =114
+            Y: =17
+      - lblJobDetailsTitle:
+          Control: Label@2.5.1
+          Group: header
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(157, 162, 181, 1)
+            Font: =Font.'Open Sans'
+            Height: =24
+            Size: =12
+            Text: =If(varLang = "EN", "Job Details", "Detalles del Trabajo")
+            Width: =400
+            X: =lblJobSelectedJobName.X + lblJobSelectedJobName.Width + 10
+            Y: =16
+      - btnJDJobInfoCard:
+          Control: Classic/Button@2.2.0
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(226, 228, 233, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =236
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            Text: =
+            Width: =498
+            X: =28
+            Y: =82
+      - btnJDOR:
+          Control: Classic/Button@2.2.0
+          Group: linkedOFReports
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =162
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =796
+            X: =btnJDJobInfoCard.X + btnJDJobInfoCard.Width + 16
+            Y: =82
+      - lblJobInformationLabel:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =15
+            Size: =10
+            Text: =If(varLang = "EN", "JOB INFORMATION", "INFORMACIÓN DEL TRABAJO")
+            Width: =300
+            X: =50
+            Y: =92
+      - lblJobLinkedReportsLabel:
+          Control: Label@2.5.1
+          Group: linkedOFReports
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "LINKED OR REPORTS", "REPORTES OR VINCULADOS")
+            Width: =300
+            X: =btnJDOR.X + 22
+            Y: =92
+      - btnJDTimeCard:
+          Control: Classic/Button@2.2.0
+          Group: timeLog
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =140
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnJDJobInfoCard.Width
+            X: =btnJDJobInfoCard.X
+            Y: =btnJDJobInfoCard.Y + btnJDJobInfoCard.Height + 16
+      - lblJobTimeLogLabel:
+          Control: Label@2.5.1
+          Group: timeLog
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "TIME LOG", "REGISTRO DE TIEMPO")
+            Width: =300
+            X: =50
+            Y: =btnJDTimeCard.Y + 10
+      - btnJDCrewCard:
+          Control: Classic/Button@2.2.0
+          Group: crewMembers
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =150
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: =
+            Width: =498
+            X: =28
+            Y: =btnJDTimeCard.Y + btnJDTimeCard.Height + 16
+      - lblJobCrewMembersLabel:
+          Control: Label@2.5.1
+          Group: crewMembers
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "CREW MEMBERS", "MIEMBROS DEL EQUIPO")
+            Width: =300
+            X: =50
+            Y: =498
+      - btnJDServicesCard:
+          Control: Classic/Button@2.2.0
+          Group: servicesProvided
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =210
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =btnJDJobInfoCard.Width
+            X: =28
+            Y: =btnJDCrewCard.Y + btnJDCrewCard.Height + 16
+      - lblJobServicesProvidedLabel:
+          Control: Label@2.5.1
+          Group: servicesProvided
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =20
+            Size: =10
+            Text: =If(varLang = "EN", "SERVICES PROVIDED", "SERVICIOS PROPORCIONADOS")
+            Width: =300
+            X: =50
+            Y: =btnJDServicesCard.Y + 10
+      - HtmlText1:
+          Control: HtmlViewer@2.1.0
+          Group: header
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =33
+            HtmlText: ="<div style='width:32px; height:32px; background:rgba(232,93,38,0.12); border-radius:7px; display:flex; align-items:center; justify-content:center;'><svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#e85d26' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/><polyline points='14 2 14 8 20 8'/></svg></div>"
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Width: =33
+            X: =130
+            Y: =13
+      - htmlJDStatus:
+          Control: HtmlViewer@2.1.0
+          Group: header
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =49
+            HtmlText: =If(varSelectedJob.Status.Value = "Submitted", "<div style='display:inline-flex; padding:5px 16px; border-radius:6px; font-size:16px; font-weight:700; background:rgba(52,199,89,0.12); color:#34c759; border:1px solid rgba(52,199,89,0.2); font-family:Segoe UI, sans-serif;'>● " & If(varLang = "EN", "Submitted", "Enviado") & "</div>", "<div style='display:inline-flex; padding:4px 12px; border-radius:6px; font-size:16px; font-weight:700; background:rgba(245,166,35,0.12); color:#f5a623; border:1px solid rgba(245,166,35,0.2); font-family:Segoe UI, sans-serif;'>● " & If(varLang = "EN", "Draft", "Borrador") & "</div>")
+            Width: =139
+            X: =1199
+            Y: =9
+      - btnJDAB:
+          Control: Classic/Button@2.2.0
+          Group: linkedABReports
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =162
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopRight: =0
+            Text: ="btnTimeLog"
+            Width: =796
+            X: =btnJDJobInfoCard.X + btnJDJobInfoCard.Width + 16
+            Y: =btnJDOR.Y + btnJDOR.Height + 16
+      - btnJDComments:
+          Control: Classic/Button@2.2.0
+          Group: comments
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =326
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: '=8  '
+            RadiusTopRight: =8
+            Text: ="btnTimeLog"
+            Width: =796
+            X: =542
+            Y: =btnJDAB.Y + btnJDAB.Height + 16
+      - lblJDJobNameLabel:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(153, 155, 168, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "JOB NAME", "NOMBRE DEL TRABAJO")
+            Width: =220
+            X: '=btnJDJobInfoCard.X + 22 '
+            Y: '=lblJobInformationLabel.Y + 30    '
+      - lblJobNameValue:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: '=RGBA(26, 29, 39, 1) '
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =22
+            Size: =12
+            Text: =varSelectedJob.JobName
+            Width: =220
+            X: =lblJDJobNameLabel.X
+            Y: =lblJDJobNameLabel.Y + 18
+      - lblJobCustomerLabel:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(153, 155, 168, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =16
+            Size: =10
+            Text: '=If(varLang = "EN", "CUSTOMER", "CLIENTE")   '
+            Width: =220
+            X: =btnJDJobInfoCard.X + 200
+            Y: =lblJDJobNameLabel.Y
+      - lblJobCustomerNameValue:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: '=RGBA(26, 29, 39, 1) '
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =22
+            Size: =12
+            Text: =varSelectedJob.'CustomerID:CustomerName'.Value
+            Width: =275
+            X: =lblJobCustomerLabel.X
+            Y: =lblJobCustomerLabel.Y + 18
+      - lblJobLocationLabel:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(153, 155, 168, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "LOCATION", "UBICACIÓN")
+            Width: =220
+            X: =btnJDJobInfoCard.X + 22
+            Y: =lblJobNameValue.Y + 50
+      - lblJobLocationValue:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: '=RGBA(26, 29, 39, 1) '
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =22
+            Size: =12
+            Text: =varSelectedJob.'JobID:Location'.Value
+            Width: =btnJDJobInfoCard.Width - 44
+            X: =lblJobLocationLabel.X
+            Y: =lblJobLocationLabel.Y + 18
+      - lblJobStartDateLabel:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(153, 155, 168, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "START DATE", "FECHA INICIO")
+            Width: =220
+            X: =btnJDJobInfoCard.X + 22
+            Y: =lblJobLocationValue.Y + 50
+      - lblJobStartDateValue:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: '=RGBA(26, 29, 39, 1) '
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =22
+            Size: =12
+            Text: =Text(DateTimeValue(varSelectedJob.'JobID:JobDateTime'.Value), "mm/dd/yyyy")
+            Width: =220
+            X: =lblJDJobNameLabel.X
+            Y: =lblJobStartDateLabel.Y + 18
+      - lblJobEndDateLabel:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(153, 155, 168, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "END DATE", "FECHA FIN")
+            Width: =220
+            X: =lblJobCustomerLabel.X
+            Y: =lblJobStartDateLabel.Y
+      - lblJobEndDateValue:
+          Control: Label@2.5.1
+          Group: jobInfo
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: '=RGBA(26, 29, 39, 1) '
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =22
+            Size: =12
+            Text: =Text(varSelectedJob.EndDateTime, "mm/dd/yyyy")
+            Width: =220
+            X: =lblJobEndDateLabel.X
+            Y: =lblJobStartDateLabel.Y + 18
+      - lblJobScheduleLabel:
+          Control: Label@2.5.1
+          Group: timeLog
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(153, 155, 168, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Semibold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "SCHEDULE", "HORARIO")
+            Width: =220
+            X: =btnJDJobInfoCard.X + 22
+            Y: =lblJobTimeLogLabel.Y + 30
+      - htmlJDTime:
+          Control: HtmlViewer@2.1.0
+          Group: timeLog
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =46
+            HtmlText: |
+              ="<div style='display:flex; align-items:center; gap:8px; font-family:Segoe UI, sans-serif;'><span style='display:inline-flex; align-items:center; padding:5px 12px; background:#f4f5f7; border:1px solid #e2e4e9; border-radius:6px; font-size:16px; font-weight:600; color:#1a1d27;'>" & Text(DateTimeValue(varSelectedJob.'JobID:JobDateTime'.Value), "h:mm AM/PM") & "</span><span style='color:#999ba8; font-size:16px;'>→</span><span style='display:inline-flex; align-items:center; padding:5px 16px; background:#f4f5f7; border:1px solid #e2e4e9; border-radius:6px; font-size:16px; font-weight:600; color:#1a1d27;'>" & Text(varSelectedJob.EndDateTime, "h:mm AM/PM") & "</span><span style='padding:5px 16px; background:rgba(232,93,38,0.08); border-radius:6px; font-size:16px; font-weight:700; color:#e85d26; margin-left:4px;'>" & With({mins: DateDiff(varSelectedJob.'JobID:JobDateTime'.Value, varSelectedJob.EndDateTime, TimeUnit.Minutes) + If(DateDiff(varSelectedJob.'JobID:JobDateTime'.Value, varSelectedJob.EndDateTime, TimeUnit.Minutes) < 0, 1440, 0)}, RoundDown(mins / 60, 0) & "h " & Mod(mins, 60) & "m") & "</span></div>"
+            Width: =454
+            X: =btnJDTimeCard.X + 22
+            Y: =lblJobScheduleLabel.Y + 22
+      - galJDCrew:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Horizontal_TwoTextOneImageVariant_ver5.0
+          Group: crewMembers
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =106
+            Items: =Filter('TC Job Crew Assignments', JobID.Id = varSelectedJob.JobID.Id)
+            TemplateSize: =180
+            Width: =btnJDCrewCard.Width - 44
+            WrapCount: =2
+            X: =btnJDCrewCard.X + 22
+            Y: =lblJobCrewMembersLabel.Y + 28
+          Children:
+            - HtmlText2:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: =Font.'Open Sans'
+                  Height: =50
+                  HtmlText: |-
+                    =With(
+                        {member: LookUp('Crew Members', ID = ThisItem.CrewMemberID.Id)},
+                        "<div style='display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; background:rgba(232,93,38,0.08); border:1px solid rgba(232,93,38,0.12); font-family:Segoe UI, sans-serif;'><div style='width:24px; height:24px; border-radius:50%; background:#e85d26; color:white; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700;'>" & Upper(Left(member.FirstName, 1) & Left(member.LastName, 1)) & "</div><span style='font-size:13px; font-weight:600; color:#e85d26;'>" & member.FirstName & " " & member.LastName & "</span></div>"
+                    )
+                  OnSelect: =Select(Parent)
+                  Width: =180
+      - htmlJDSvcTraffic:
+          Control: HtmlViewer@2.1.0
+          Group: servicesProvided
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =48
+            HtmlText: ="<div style='display:flex; align-items:center; gap:10px; padding:0 14px; height:36px; border-radius:8px; font-family:Segoe UI, sans-serif; font-size:16px; font-weight:600; border:1px solid " & If(varSelectedJob.SVC_TrafficCrew, "rgba(52,199,89,0.15)", "#e2e4e9") & "; background:" & If(varSelectedJob.SVC_TrafficCrew, "rgba(52,199,89,0.08)", "#f9fafb") & "; color:" & If(varSelectedJob.SVC_TrafficCrew, "#34c759", "#999ba8") & ";'><span style='width:8px; height:8px; border-radius:50%; background:" & If(varSelectedJob.SVC_TrafficCrew, "#34c759", "#d0d3da") & ";'></span>" & If(varLang = "EN", "Traffic Crew", "Equipo de Tráfico") & "</div>"
+            Width: '=(btnJDServicesCard.Width - 54) / 2  '
+            X: '=btnJDServicesCard.X + 22    '
+            Y: =lblJobServicesProvidedLabel.Y + 30
+      - htmlJDSvcEmergency:
+          Control: HtmlViewer@2.1.0
+          Group: servicesProvided
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: ="<div style='display:flex; align-items:center; gap:10px; padding:0 14px; height:36px; border-radius:8px; font-family:Segoe UI, sans-serif; font-size:16px; font-weight:600; border:1px solid " & If(varSelectedJob.SVC_EmergencyCrew, "rgba(52,199,89,0.15)", "#e2e4e9") & "; background:" & If(varSelectedJob.SVC_EmergencyCrew, "rgba(52,199,89,0.08)", "#f9fafb") & "; color:" & If(varSelectedJob.SVC_EmergencyCrew, "#34c759", "#999ba8") & ";'><span style='width:8px; height:8px; border-radius:50%; background:" & If(varSelectedJob.SVC_EmergencyCrew, "#34c759", "#d0d3da") & ";'></span>" & If(varLang = "EN", "Emergency Crew", "Equipo de Emergencia") & "</div>"
+            Width: '=(btnJDServicesCard.Width - 54) / 2  '
+            X: =htmlJDSvcTraffic.X + htmlJDSvcTraffic.Width + 10
+            Y: =htmlJDSvcTraffic.Y
+      - htmlJDSvcFlagger:
+          Control: HtmlViewer@2.1.0
+          Group: servicesProvided
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: ="<div style='display:flex; align-items:center; gap:10px; padding:0 14px; height:36px; border-radius:8px; font-family:Segoe UI, sans-serif; font-size:16px; font-weight:600; border:1px solid " & If(varSelectedJob.SVC_AddonFlagger, "rgba(52,199,89,0.15)", "#e2e4e9") & "; background:" & If(varSelectedJob.SVC_AddonFlagger, "rgba(52,199,89,0.08)", "#f9fafb") & "; color:" & If(varSelectedJob.SVC_AddonFlagger, "#34c759", "#999ba8") & ";'><span style='width:8px; height:8px; border-radius:50%; background:" & If(varSelectedJob.SVC_AddonFlagger, "#34c759", "#d0d3da") & ";'></span>" & If(varLang = "EN", "Add-On Flagger", "Abanderado Adicional") & "</div>"
+            Width: '=(btnJDServicesCard.Width - 54) / 2  '
+            X: =htmlJDSvcTraffic.X
+            Y: =htmlJDSvcTraffic.Y + 60
+      - htmlJDSvcMobilization:
+          Control: HtmlViewer@2.1.0
+          Group: servicesProvided
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: ="<div style='display:flex; align-items:center; gap:10px; padding:0 14px; height:36px; border-radius:8px; font-family:Segoe UI, sans-serif; font-size:16px; font-weight:600; border:1px solid " & If(varSelectedJob.SVC_EmergencyCrew, "rgba(52,199,89,0.15)", "#e2e4e9") & "; background:" & If(varSelectedJob.SVC_EmergencyCrew, "rgba(52,199,89,0.08)", "#f9fafb") & "; color:" & If(varSelectedJob.SVC_EmergencyCrew, "#34c759", "#999ba8") & ";'><span style='width:8px; height:8px; border-radius:50%; background:" & If(varSelectedJob.SVC_EmergencyCrew, "#34c759", "#d0d3da") & ";'></span>" & If(varLang = "EN", "Mobilization", "Movilización") & "</div>"
+            Width: '=(btnJDServicesCard.Width - 54) / 2  '
+            X: =htmlJDSvcEmergency.X
+            Y: =htmlJDSvcFlagger.Y
+      - htmlJDSvcArrowBoard:
+          Control: HtmlViewer@2.1.0
+          Group: servicesProvided
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: ="<div style='display:flex; align-items:center; gap:10px; padding:0 14px; height:36px; border-radius:8px; font-family:Segoe UI, sans-serif; font-size:16px; font-weight:600; border:1px solid " & If(varSelectedJob.SVC_Arrowboard, "rgba(52,199,89,0.15)", "#e2e4e9") & "; background:" & If(varSelectedJob.SVC_Arrowboard, "rgba(52,199,89,0.08)", "#f9fafb") & "; color:" & If(varSelectedJob.SVC_Arrowboard, "#34c759", "#999ba8") & ";'><span style='width:8px; height:8px; border-radius:50%; background:" & If(varSelectedJob.SVC_Arrowboard, "#34c759", "#d0d3da") & ";'></span>" & If(varLang = "EN", "Arrow Board", "Tablero de Flechas") & "</div>"
+            Width: '=(btnJDServicesCard.Width - 54) / 2  '
+            X: =htmlJDSvcTraffic.X
+            Y: =htmlJDSvcFlagger.Y + 60
+      - htmlJDSvcPO:
+          Control: HtmlViewer@2.1.0
+          Group: servicesProvided
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =50
+            HtmlText: ="<div style='display:flex; align-items:center; gap:10px; padding:0 14px; height:36px; border-radius:8px; font-family:Segoe UI, sans-serif; font-size:16px; font-weight:600; border:1px solid " & If(varSelectedJob.SVC_POwVehicle, "rgba(52,199,89,0.15)", "#e2e4e9") & "; background:" & If(varSelectedJob.SVC_POwVehicle, "rgba(52,199,89,0.08)", "#f9fafb") & "; color:" & If(varSelectedJob.SVC_POwVehicle, "#34c759", "#999ba8") & ";'><span style='width:8px; height:8px; border-radius:50%; background:" & If(varSelectedJob.SVC_POwVehicle, "#34c759", "#d0d3da") & ";'></span>" & If(varLang = "EN", "PO w/ Vehicle", "PO c/ Vehículo") & "</div>"
+            Width: '=(btnJDServicesCard.Width - 54) / 2  '
+            X: =htmlJDSvcEmergency.X
+            Y: =htmlJDSvcArrowBoard.Y
+      - btnJDCrewCard_1:
+          Control: Classic/Button@2.2.0
+          Group: pmAcknowledgment
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =118
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            Text: =
+            Width: =498
+            X: =28
+            Y: =btnJDServicesCard.Y + btnJDServicesCard.Height + 16
+      - lblJobPMAcknowledgmentLabel:
+          Control: Label@2.5.1
+          Group: pmAcknowledgment
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =13
+            Size: =10
+            Text: =If(varLang = "EN", "PM ACKNOWLEDGMENT", "RECONOCIMIENTO DEL PM")
+            Width: =300
+            X: =50
+            Y: =902
+      - htmlJDORHeaders:
+          Control: HtmlViewer@2.1.0
+          Group: linkedOFReports
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: |-
+              ="<div style='display:grid; grid-template-columns:1.2fr 0.8fr 1fr 1fr 80px; font-family:Segoe UI, sans-serif; font-size:12px; font-weight:700; color:#6b7080; text-transform:uppercase; letter-spacing:0.5px; padding-bottom:8px; border-bottom:2px solid #e2e4e9;'><span>" & If(varLang = "EN", "Officer", "Oficial") & "</span><span>" & If(varLang = "EN", "Badge", "Placa") & "</span><span>" & If(varLang = "EN", "Arrival", "Llegada") & "</span><span>" & If(varLang = "EN", "Dismissal", "Salida") & "</span><span>" & If(varLang = "EN", "Status", "Estado") & "</span></div>"
+            Width: =btnJDOR.Width - 44
+            X: =btnJDOR.X + 22
+            Y: =lblJobLinkedReportsLabel.Y + 32
+      - galJDOR:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Group: linkedOFReports
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =56
+            Items: =Filter('OF Form', JobID.Id = varSelectedJob.JobID.Id)
+            ShowScrollbar: =false
+            TemplateSize: =56
+            Width: =btnJDOR.Width - 44
+            X: '=btnJDOR.X + 22  '
+            Y: '=htmlJDORHeaders.Y + 28  '
+          Children:
+            - Separator1:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =8
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - htmlGalORRow:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: =Font.'Open Sans'
+                  Height: =60
+                  HtmlText: ="<div style='display:grid; grid-template-columns:1.2fr 0.8fr 1fr 1fr 90px; align-items:center; height:44px; font-family:Segoe UI, sans-serif; font-size:16px; '><span style='font-weight:600; color:#1a1d27;'>" & ThisItem.Title & "</span><span style='color:#6b7080;'>#" & ThisItem.BadgeNumber & "</span><span style='color:#6b7080;'>" & Text(ThisItem.ArrivalTime, "h:mm AM/PM") & "</span><span style='color:#6b7080;'>" & Text(ThisItem.DismissalTime, "h:mm AM/PM") & "</span><span>" & If(ThisItem.Status.Value = "Submitted", "<span style='display:inline-flex; padding:2px 8px; border-radius:4px; font-size:15px; font-weight:700; background:rgba(52,199,89,0.08); color:#34c759;'>" & If(varLang = "EN", "Submitted", "Enviado") & "</span>", "<span style='display:inline-flex; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; background:rgba(245,166,35,0.08); color:#f5a623;'>" & If(varLang = "EN", "Draft", "Borrador") & "</span>") & "</span></div>"
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.Width
+      - HtmlText3:
+          Control: HtmlViewer@2.1.0
+          Group: pmAcknowledgment
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =55
+            HtmlText: |
+              ="<div style='display:flex; align-items:center; gap:14px; font-family:Segoe UI, sans-serif;'><div style='width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg, #e85d26, #7b5ea7); color:white; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700;'>" & Upper(Left(varSelectedJob.ProjectManagerName, 1) & Mid(varSelectedJob.ProjectManagerName, Find(" ", varSelectedJob.ProjectManagerName) + 1, 1)) & "</div><div style='flex:1;'><div style='font-size:15px; font-weight:600; color:#1a1d27;'>" & varSelectedJob.ProjectManagerName & "</div><div style='font-size:14px; color:#999ba8;'>" & If(varLang = "EN", "Project Manager", "Gerente de Proyecto") & "</div></div><div style='font-size:14px; color:#999ba8;'>" & If(varLang = "EN", "Signed ", "Firmado ") & Text(varSelectedJob.PMSignatureDate, "mm/dd/yyyy") & "</div></div>"
+            Width: =425
+            X: =60
+            Y: =938
+      - btnORBorder_1:
+          Control: Classic/Button@2.2.0
+          Group: linkedOFReports
+          Properties:
+            Align: =Align.Left
+            BorderColor: =ColorFade(RGBA(42, 46, 58, 1), -15%)
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(52, 120, 246, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(52, 120, 246, 1)
+            Font: =Font.'Open Sans'
+            Height: =btnJDOR.Height
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(34, 38, 51, 1), -20%)
+            OnSelect: =Navigate(TCForm,ScreenTransition.None)
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomRight: =0
+            RadiusTopRight: =0
+            Text: ="TC Form" & Char(10)
+            Width: =10
+            X: =btnJDOR.X
+            Y: =btnJDOR.Y
+      - htmlJDOREmpty:
+          Control: HtmlViewer@2.1.0
+          Group: linkedOFReports
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =60
+            HtmlText: ="<div style='text-align:center; padding:20px; font-family:Segoe UI, sans-serif; font-size:13px; color:#999ba8;'>" & If(varLang = "EN", "No OR Reports linked to this job", "No hay reportes OR vinculados a este trabajo") & "</div>"
+            Visible: =CountRows(Filter('OF Form', JobID.Id = varSelectedJob.JobID.Id)) = 0
+            Width: =btnJDOR.Width - 44
+            X: =btnJDOR.X + 22
+            Y: =htmlJDORHeaders.Y + 30
+      - btnDABAccent:
+          Control: Classic/Button@2.2.0
+          Group: linkedABReports
+          Properties:
+            Align: =Align.Left
+            BorderColor: =ColorFade(RGBA(42, 46, 58, 1), -15%)
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(52, 120, 246, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            Fill: =RGBA(123, 94, 167, 1)
+            Font: =Font.'Open Sans'
+            Height: =btnJDOR.Height
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(34, 38, 51, 1), -20%)
+            OnSelect: =Navigate(TCForm,ScreenTransition.None)
+            PaddingBottom: =20
+            PaddingLeft: =20
+            PaddingRight: =20
+            PaddingTop: =20
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomRight: =0
+            RadiusTopRight: =0
+            Text: ="TC Form" & Char(10)
+            Width: =10
+            X: =btnJDAB.X
+            Y: =btnJDAB.Y
+      - lblJobLinkedABInspectionsLabel:
+          Control: Label@2.5.1
+          Group: linkedABReports
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =16
+            Size: =10
+            Text: =If(varLang = "EN", "Linked AB Inspections", "Inspecciones AB Vinculadas")
+            Width: =300
+            X: =btnJDAB.X + 22
+            Y: =btnJDAB.Y + 14
+      - htmlJDABHeaders:
+          Control: HtmlViewer@2.1.0
+          Group: linkedABReports
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: |-
+              ="<div style='display:grid; grid-template-columns:0.8fr 1.2fr 0.8fr 0.8fr 1fr 80px; font-family:Segoe UI, sans-serif; font-size:12px; font-weight:700; color:#6b7080; text-transform:uppercase; letter-spacing:0.5px; padding-bottom:8px; border-bottom:2px solid #e2e4e9;'><span>" & If(varLang = "EN", "Board #", "Tablero #") & "</span><span>" & If(varLang = "EN", "Driver", "Conductor") & "</span><span>" & If(varLang = "EN", "Pick Up", "Salida") & "</span><span>" & If(varLang = "EN", "Drop Off", "Entrada") & "</span><span>" & If(varLang = "EN", "Check", "Revisión") & "</span><span>" & If(varLang = "EN", "Status", "Estado") & "</span></div>"
+            Width: =btnJDOR.Width - 44
+            X: =btnJDAB.X + 22
+            Y: =lblJobLinkedABInspectionsLabel.Y + 32
+      - galJDAB:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Group: linkedABReports
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =btnJDAB.Height - (htmlJDABHeaders.Y + 28 - btnJDAB.Y)
+            Items: =Filter('Arrowboard', JobID.Id = varSelectedJob.JobID.Id)
+            ShowScrollbar: =false
+            TemplateSize: =56
+            Visible: =CountRows(Filter('Arrowboard', JobID.Id = varSelectedJob.JobID.Id)) > 0
+            Width: =btnJDAB.Width - 44
+            X: =btnJDAB.X + 22
+            Y: =htmlJDABHeaders.Y + 28
+          Children:
+            - Separator1_1:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =8
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - htmlGalABRow:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: =Font.'Open Sans'
+                  Height: =56
+                  HtmlText: |-
+                    =With(
+                        {
+                            passCount: 
+                                If(ThisItem.Tires_Pickup, 1, 0) + If(ThisItem.Pins_Pickup, 1, 0) + If(ThisItem.StabilizingLegs_Pickup, 1, 0) + If(ThisItem.TurnSignals_Pickup, 1, 0) + If(ThisItem.ArrowScreen_Pickup, 1, 0) + If(ThisItem.PulleySystem_Pickup, 1, 0) + If(ThisItem.ControlBox_Pickup, 1, 0) + If(ThisItem.Chains_Pickup, 1, 0) + If(ThisItem.ElectricCable_Pickup, 1, 0) + If(ThisItem.SupportLeg_Pickup, 1, 0) +
+                                If(ThisItem.Tires_Dropoff, 1, 0) + If(ThisItem.Pins_Dropoff, 1, 0) + If(ThisItem.Stabilizing_Dropoff, 1, 0) + If(ThisItem.TurnSignals_Dropoff, 1, 0) + If(ThisItem.ArrowScreen_Dropoff, 1, 0) + If(ThisItem.PulleySystem_Dropoff, 1, 0) + If(ThisItem.ControlBox_Dropoff, 1, 0) + If(ThisItem.Chains_Dropoff, 1, 0) + If(ThisItem.ElectricCable_Dropoff, 1, 0) + If(ThisItem.SupportLeg_Dropoff, 1, 0),
+                            driver: LookUp('Crew Members', ID = ThisItem.CrewDriver.Id)
+                        },
+                        "<div style='display:grid; grid-template-columns:0.8fr 1.2fr 0.8fr 0.8fr 1fr 80px; align-items:center; height:44px; font-family:Segoe UI, sans-serif; font-size:13px; border-bottom:1px solid #f0f1f3;'><span style='font-weight:600; color:#1a1d27;'>AB #" & ThisItem.Title & "</span><span style='color:#6b7080;'>" & driver.FirstName & " " & driver.LastName & "</span><span style='color:#6b7080;'>" & Text(ThisItem.PickupTime, "h:mm AM/PM") & "</span><span style='color:#6b7080;'>" & Text(ThisItem.DropOffTime, "h:mm AM/PM") & "</span><span><span style='display:inline-flex; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; background:rgba(52,199,89,0.08); color:#34c759;'>" & Text(passCount) & " ✓</span> <span style='display:inline-flex; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; background:rgba(239,68,68,0.08); color:#ef4444;'>" & Text(20 - passCount) & " ✕</span></span><span>" & If(ThisItem.Status.Value = "Submitted", "<span style='display:inline-flex; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; background:rgba(52,199,89,0.08); color:#34c759;'>" & If(varLang = "EN", "Submitted", "Enviado") & "</span>", "<span style='display:inline-flex; padding:2px 8px; border-radius:4px; font-size:11px; font-weight:700; background:rgba(245,166,35,0.08); color:#f5a623;'>" & If(varLang = "EN", "Draft", "Borrador") & "</span>") & "</span></div>"
+                    )
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.Width
+      - htmlJDABEmpty:
+          Control: HtmlViewer@2.1.0
+          Group: linkedABReports
+          Properties:
+            Font: =Font.'Open Sans'
+            Height: =75
+            HtmlText: ="<div style='text-align:center; padding:20px; font-family:Segoe UI, sans-serif; font-size:13px; color:#999ba8;'>" & If(varLang = "EN", "No AB Inspections linked to this job", "No hay inspecciones AB vinculadas a este trabajo") & "</div>"
+            Visible: =CountRows(Filter('Arrowboard', JobID.Id = varSelectedJob.JobID.Id)) = 0
+            Width: =btnJDOR.Width - 44
+            X: =btnJDAB.X + 22
+            Y: =htmlJDABHeaders.Y + 30
+      - lblJobCommentsLabel:
+          Control: Label@2.5.1
+          Group: comments
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =14
+            Size: =10
+            Text: =If(varLang = "EN", "COMMENTS", "COMENTARIOS")
+            Width: =300
+            X: =btnJDComments.X + 22
+            Y: =450
+      - galJDORComments:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Group: comments
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =97
+            Items: =Filter('OF Form', JobID.Id = varSelectedJob.ID, !IsBlank(Comments))
+            ShowScrollbar: =false
+            Visible: =CountRows(Filter('OF Form', JobID.Id = varSelectedJob.ID, !IsBlank(Comments))) > 0
+            Width: =752
+            X: =btnJDComments.X + 22
+            Y: =475
+          Children:
+            - Separator3:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =8
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - htmlGalORComment:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: =Font.'Open Sans'
+                  Height: =105
+                  HtmlText: |-
+                    ="<div style='font-family:Segoe UI, sans-serif; margin-bottom:12px;'><div style='display:flex; align-items:center; gap:8px; margin-bottom:8px;'><div style='width:22px; height:22px; background:rgba(52,120,246,0.08); border-radius:5px; display:flex; align-items:center; justify-content:center;'><svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='#3478f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='8.5' cy='7' r='4'/><polyline points='17 11 19 13 23 9'/></svg></div><span style='font-size:15px; font-weight:700; color:#3478f6; text-transform:uppercase; letter-spacing:0.5px;'>" & If(varLang = "EN", "OR Report", "Reporte OR") & " — " & ThisItem.Title & " #" & ThisItem.BadgeNumber & "</span></div><div style='background:#f9fafb; border:1px solid #e2e4e9; border-radius:8px; padding:12px 14px; font-size:15px; color:#6b7080; line-height:1.6;'>" & ThisItem.Comments & "</div></div>"
+                  Width: '=Parent.TemplateWidth    '
+      - galJDABComments:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Group: comments
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Height: =97
+            Items: "=Filter('Arrowboard', JobID.Id = varSelectedJob.ID, !IsBlank(Notes))    "
+            ShowScrollbar: =false
+            Visible: =CountRows(Filter('Arrowboard', JobID.Id = varSelectedJob.ID, !IsBlank(Notes))) > 0
+            Width: =752
+            X: =btnJDComments.X + 22
+            Y: =575
+          Children:
+            - Separator3_1:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Fill: =RGBA(255, 255, 255, 1)
+                  Height: =8
+                  OnSelect: =Select(Parent)
+                  Width: =Parent.TemplateWidth
+                  Y: =Parent.TemplateHeight - Self.Height
+            - htmlGalABComment:
+                Control: HtmlViewer@2.1.0
+                Properties:
+                  Font: =Font.'Open Sans'
+                  Height: =104
+                  HtmlText: |-
+                    =With(
+                        {driver: LookUp('Crew Members', ID = ThisItem.CrewDriver.Id)},
+                        "<div style='font-family:Segoe UI, sans-serif; margin-bottom:15px;'><div style='display:flex; align-items:center; gap:8px; margin-bottom:8px;'><div style='width:22px; height:22px; background:rgba(123,94,167,0.08); border-radius:5px; display:flex; align-items:center; justify-content:center;'><svg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='#7b5ea7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='15 3 21 3 21 9'/><polyline points='9 21 3 21 3 15'/><line x1='21' y1='3' x2='14' y2='10'/><line x1='3' y1='21' x2='10' y2='14'/></svg></div><span style='font-size:13px; font-weight:700; color:#7b5ea7; text-transform:uppercase; letter-spacing:0.5px;'>" & If(varLang = "EN", "AB Inspection", "Inspección AB") & " — AB #" & ThisItem.Title & "</span></div><div style='background:#f9fafb; border:1px solid #e2e4e9; border-radius:8px; padding:12px 14px; font-size:15px; color:#6b7080; line-height:1.6;'>" & ThisItem.Notes & "</div></div>"
+                    )
+                  Width: '=Parent.TemplateWidth    '
+      - btnJDPhotosCard:
+          Control: Classic/Button@2.2.0
+          Group: jobPhotos
+          Properties:
+            BorderColor: =RGBA(220, 223, 229, 1)
+            BorderThickness: =1.5
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(166, 166, 166, 1)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            Font: =Font.'Open Sans'
+            Height: =220
+            HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
+            HoverColor: =RGBA(255, 255, 255, 1)
+            HoverFill: =ColorFade(RGBA(56, 96, 178, 1), -20%)
+            PressedBorderColor: =Self.Fill
+            PressedColor: =Self.Fill
+            PressedFill: =Self.Color
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: '=8  '
+            RadiusTopRight: =8
+            Text: =
+            Width: =796
+            X: =542
+            Y: =btnJDComments.Y + btnJDComments.Height + 16
+      - lblJobPhotosLabel:
+          Control: Label@2.5.1
+          Group: jobPhotos
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Color: =RGBA(107, 112, 128, 1)
+            Font: =Font.'Open Sans'
+            FontWeight: =FontWeight.Bold
+            Height: =14
+            Size: =10
+            Text: =If(varLang = "EN", "JOB PHOTOS", "FOTOS DEL TRABAJO")
+            Width: =300
+            X: =btnJDPhotosCard.X + 22
+            Y: =btnJDPhotosCard.Y + 14
+      - htmlJDPhotoCount:
+          Control: HtmlViewer@2.1.0
+          Group: jobPhotos
+          Properties:
+            Font: =Font.'Open Sans'
+            HtmlText: ="<div style='display:inline-flex; align-items:center; gap:4px; padding:3px 13px; background:rgba(232,93,38,0.08); border:1px solid rgba(232,93,38,0.12); border-radius:6px; font-family:Segoe UI, sans-serif; font-size:13px; font-weight:700; color:#e85d26;'>" & Text(CountRows(varSelectedJob.Attachments)) & If(varLang = "EN", " photos", " fotos") & "</div>"
+            Width: =96
+            X: =1220
+            Y: =btnJDPhotosCard.Y + 12
+      - galJDPhotos:
+          Control: Gallery@2.15.0
+          Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0
+          Group: jobPhotos
+          Properties:
+            BorderColor: =RGBA(0, 18, 107, 1)
+            Fill: =Color.Transparent
+            Height: =151
+            Items: |
+              =Filter(varSelectedJob.Attachments, !StartsWith(DisplayName, "signature") && !StartsWith(DisplayName, "PMSignature"))
+            ShowScrollbar: =false
+            TemplatePadding: =4
+            TemplateSize: =150
+            Visible: =CountRows(varSelectedJob.Attachments) > 0
+            Width: =btnJDPhotosCard.Width - 44
+            WrapCount: =4
+            X: =btnJDPhotosCard.X + 22
+            Y: =lblJobPhotosLabel.Y + 30
+          Children:
+            - imgJDThumb:
+                Control: Image@2.2.3
+                Properties:
+                  BorderColor: =RGBA(0, 18, 107, 1)
+                  Height: =Parent.TemplateHeight - 4
+                  Image: =ThisItem.Value
+                  ImagePosition: =ImagePosition.Fill
+                  OnSelect: =Select(Parent)
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                  Width: =Parent.TemplateWidth - 4
