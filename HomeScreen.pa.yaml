@@ -348,12 +348,12 @@ Screens:
                   BorderColor: =ColorFade(RGBA(42, 46, 58, 1), 20%)
                   Color: =RGBA(255, 255, 255, 1)
                   DisabledBorderColor: =RGBA(166, 166, 166, 1)
-                  DisplayMode: =DisplayMode.Disabled
                   Fill: =RGBA(26, 29, 39, 1)
                   Font: =Font.'Open Sans'
                   HoverBorderColor: =ColorFade(Self.BorderColor, 20%)
                   HoverColor: =RGBA(255, 255, 255, 1)
                   HoverFill: =ColorFade(RGBA(34, 38, 51, 1), -20%)
+                  OnSelect: =Navigate(SupportTicket, ScreenTransition.None)
                   PressedBorderColor: =Self.Fill
                   PressedColor: =Self.Fill
                   PressedFill: =Self.Color
